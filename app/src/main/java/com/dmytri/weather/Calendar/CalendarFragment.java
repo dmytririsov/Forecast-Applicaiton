@@ -55,13 +55,7 @@ public class CalendarFragment extends Fragment {
 
         TextView mNameOfMonthTextView = (TextView)rootView.findViewById(R.id.name_of_month);
         mNameOfMonthText = mCalendarInst.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US);
-        mNameOfMonthTextView.setText(mNameOfMonthText.toUpperCase());
-        /*
-        TextView mNameOfYearTextView = (TextView)rootView.findViewById(R.id.name_of_year);
-        mNameOfYearText = mCalendarInst.getDisplayName(Calendar.YEAR, Calendar.LONG, Locale.US);
-        mNameOfYearTextView.setText(mNameOfYearText);*/
-
-
+        mNameOfMonthTextView.setText(mNameOfMonthText.toUpperCase() + ", " + mCalendarInst.get(Calendar.YEAR));
 
         final CalendarDaysAdapter adapter = new CalendarDaysAdapter(getActivity(), false);
         grid.setAdapter(adapter);

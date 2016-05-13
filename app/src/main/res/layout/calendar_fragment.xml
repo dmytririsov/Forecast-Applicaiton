@@ -23,6 +23,7 @@
         android:layout_centerHorizontal="true" />
 
     <ImageButton
+        android:layout_marginLeft="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/chevron_left"
@@ -32,6 +33,7 @@
         android:layout_alignParentStart="true" />
 
     <ImageButton
+        android:layout_marginRight="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/chevron_right"
@@ -42,6 +44,7 @@
         android:layout_alignEnd="@+id/calendar_days" />
 
     <GridView
+
         android:id="@+id/calendar_days"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="45dp"
