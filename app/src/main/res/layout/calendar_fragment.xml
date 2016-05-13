@@ -43,15 +43,15 @@
 
     <GridView
         android:id="@+id/calendar_days"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="45dp"
         android:layout_width="wrap_content"
         android:layout_height="468dp"
-        android:columnWidth="100dp"
-        android:numColumns="auto_fit"
+        android:columnWidth="50dp"
         android:stretchMode="columnWidth"
         android:verticalSpacing="15dp"
         android:layout_below="@+id/imageButtonPrev"
-        android:layout_centerHorizontal="true" />
+        android:numColumns="7" />
 
 
 </RelativeLayout>
