@@ -38,7 +38,7 @@ public class EventDetails extends AppCompatActivity {
         mEventDate = (TextView)findViewById(R.id.event_details_date);
         //TODO: Set current date (day, month, year) from input date
         //mEventDate.setText();
-        mEventEditText = (EditText)findViewById(R.id.event_details_edit_text);
+        mEventEditText = (EditText) findViewById(R.id.event_details_edit_text);
 
         Intent intent = getIntent();
         int pos = intent.getIntExtra("pos", 2);
