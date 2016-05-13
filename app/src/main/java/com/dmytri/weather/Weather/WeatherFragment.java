@@ -72,6 +72,7 @@ public class WeatherFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "on click update");
+                Toast.makeText(getActivity(), "Data updated", Toast.LENGTH_SHORT).show();
                 updateWeatherData(CityPreference.getInstance(getActivity()).getCity());
             }
         });
@@ -97,11 +98,13 @@ public class WeatherFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 if (!input.getText().toString().isEmpty()) {
                     changeCity(input.getText().toString());
+                    Log.d(TAG, "city updated");
                 }
                 else {
                     Toast.makeText(getActivity(),
                             getActivity().getString(R.string.city_not_found),
                             Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "city not found");
                 }
             }
         });
@@ -178,16 +181,25 @@ public class WeatherFragment extends Fragment {
     private void renderWeather(JSONObject json) {
         Log.d(TAG, "start weather rendering");
         try {
+            DateFormat df = DateFormat.getDateTimeInstance();
             mCityField.setText(json.getString("name").toUpperCase(Locale.US) +
                     ", " + json.getJSONObject("sys").getString("country"));
             JSONObject details = json.getJSONArray("weather").getJSONObject(0);
             JSONObject main = json.getJSONObject("main");
+            long sunrise = json.getJSONObject("sys").getLong("sunrise");
+            String updateSunrise = df.format(new Date(sunrise * TIME_TO_MILLISECONDS));
+            long sunset = json.getJSONObject("sys").getLong("sunset");
+            String updateSunset = df.format(new Date(sunset * TIME_TO_MILLISECONDS));
+            JSONObject wind = json.getJSONObject("wind");
             mDetailsField.setText(
                     details.getString(getString(R.string.text_view_description_field)).toUpperCase(Locale.US) +
                             "\n" + "Humidity: " + main.getString("humidity") + "%" +
-                            "\n" + "Pressure: " + main.getString("pressure") + "hPa");
+                            "\n" + "Pressure: " + main.getString("pressure") + "hPa" +
+                            "\n" + "Wind: " + wind.getString("speed") + "m/s" +
+                            "\n" + "Sunrise: " + updateSunrise +
+                            "\n" + "Sunrise: " + updateSunset);
             mCurrentTemperatureField.setText(String.format("%.1f", main.getDouble("temp")) + "℃"); //setting up details
-            DateFormat df = DateFormat.getDateTimeInstance(); //current time
+            //current time
             String updateOn = df.format(new Date(json.getLong("dt") * TIME_TO_MILLISECONDS));
             mUpdateField.setText("Last update: " + updateOn);
 

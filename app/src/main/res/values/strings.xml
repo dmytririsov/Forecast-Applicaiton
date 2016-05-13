@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Weather</string>
+    <string name="app_name">Calendar and Weather</string>
 
     <string name="button_change_city">Change city</string>
     <string name="open_weather_maps_app_id">9c4a47ff53dff3ea499b0bd0f239df78</string>
@@ -20,5 +20,9 @@
     <string name="city_not_found">City not found</string>
     <string name="button_update">Update</string>
     <string name="text_view_description_field">description</string>
+    <string name="event_details_button_alarm">Add Alarm</string>
+    <string name="event_details_button_submit">Submit</string>
+    <string name="event_details">Event details</string>
+
 
 </resources>

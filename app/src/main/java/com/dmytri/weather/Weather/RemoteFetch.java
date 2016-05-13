@@ -24,7 +24,7 @@ public class RemoteFetch {
         try {
         URL url = new URL(String.format(OPEN_WEATHER_MAP_API, city));//Open API and connection
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            Log.d("TAG", connection.toString());
+            Log.d(TAG, connection.toString());
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream())); //Get input stream
 
             StringBuffer json = new StringBuffer(1024);
@@ -46,6 +46,7 @@ public class RemoteFetch {
         }
         catch (Exception e)
         {
+            Log.d(TAG, e.toString());
             return null;
         }
     }

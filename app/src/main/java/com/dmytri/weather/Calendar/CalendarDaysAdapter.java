@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CalendarView;
 import android.widget.TextView;
 
 import com.dmytri.weather.R;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class CalendarDaysAdapter extends BaseAdapter {
 
@@ -20,11 +22,21 @@ public class CalendarDaysAdapter extends BaseAdapter {
     private final GregorianCalendar mCalendar;
     private final Context mContext;
 
-    public CalendarDaysAdapter(Context context) {
-        Calendar c = Calendar.getInstance();
-        int mounth = c.get(Calendar.MONTH);
-        mCalendar = new GregorianCalendar(2016, mounth, 1);
-        mContext = context;
+
+    public CalendarDaysAdapter(Context context, boolean month) {
+        Calendar calendar = Calendar.getInstance();
+        int monthInCalendar = calendar.get(Calendar.MONTH);
+        if (month == false) {
+            mCalendar = new GregorianCalendar(2016, monthInCalendar, 1);
+            mContext = context;
+        }
+        else {
+            monthInCalendar = calendar.get(Calendar.MONTH) + 1;
+            mCalendar = new GregorianCalendar(2016, monthInCalendar, 1);
+            mContext = context;
+        }
+
+
     }
 
     @Override
@@ -48,6 +60,7 @@ public class CalendarDaysAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.day_item, parent, false);
+
         }
         TextView dayNumber = (TextView) convertView.findViewById(R.id.day_number_text_view);
         dayNumber.setText(String.valueOf(position + 1));

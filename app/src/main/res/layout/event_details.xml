@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/event_details_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="~date~"
+        android:layout_marginLeft="34dp"
+        android:layout_marginStart="34dp"
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/event_details_edit_text"
+        android:layout_alignStart="@+id/event_details_edit_text"
+        android:layout_marginTop="34dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_details_button_alarm"
+        android:id="@+id/button_set_alarm"
+        android:layout_alignTop="@+id/event_details_date"
+        android:layout_toRightOf="@+id/button2"
+        android:layout_toEndOf="@+id/button2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_details_button_submit"
+        android:id="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="107dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="11dp"
+        android:text="@string/event_details"
+        android:id="@+id/textView"
+        android:layout_below="@+id/button_set_alarm"
+        android:layout_toRightOf="@+id/event_details_date"
+        android:layout_toEndOf="@+id/event_details_date"
+        android:layout_marginTop="35dp" />
+
+    <EditText
+        android:background="@drawable/border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_details_edit_text"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView"
+        android:layout_above="@+id/button2" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_details_date"
+        android:layout_alignLeft="@+id/event_details_edit_text"
+        android:layout_alignStart="@+id/event_details_edit_text"
+        android:spinnerMode="dialog"
+        android:layout_alignBottom="@+id/textView"
+        android:id="@+id/event_details_spinner"
+        android:layout_toStartOf="@+id/button2"
+        android:layout_toLeftOf="@+id/button2" />
+
+</RelativeLayout>

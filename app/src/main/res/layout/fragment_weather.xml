@@ -56,10 +56,9 @@
         android:layout_height="wrap_content"
         android:text="@string/button_update"
         android:id="@+id/btnUpdate"
-        android:layout_marginBottom="37dp"
-        android:layout_above="@+id/current_temperature_field"
-        android:layout_alignLeft="@+id/current_temperature_field"
-        android:layout_alignStart="@+id/current_temperature_field" />
+        android:layout_above="@+id/change_city"
+        android:layout_alignRight="@+id/change_city"
+        android:layout_alignEnd="@+id/change_city" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -67,8 +66,8 @@
         android:layout_height="wrap_content"
         android:text="@string/button_change_city"
         android:id="@+id/change_city"
-        android:layout_alignBottom="@+id/btnUpdate"
-        android:layout_toLeftOf="@+id/btnUpdate"
-        android:layout_toStartOf="@+id/btnUpdate" />
+        android:layout_above="@+id/weather_icon"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
