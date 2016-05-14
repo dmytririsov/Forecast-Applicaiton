@@ -13,6 +13,7 @@ public class CityPreference {
 
     private SharedPreferences mPreferences;
     private static CityPreference sInstance;
+    private String mCity;
 
     public static CityPreference getInstance(Activity activity) {
         if (sInstance == null) {
@@ -26,10 +27,14 @@ public class CityPreference {
     }
 
     public String getCity() {
-        return mPreferences.getString("city", "Kiev,UA"); //if not chosen city, as default Kiev
+        if (mCity == null) {
+            mCity = mPreferences.getString("city", "Kiev,UA"); //if not chosen city, as default Kiev
+        }
+        return mCity;
     }
 
     void setCity(String city) {
-        mPreferences.edit().putString(CITY_KEY, city).commit();
+        mCity = city;
+        mPreferences.edit().putString(CITY_KEY, city).apply();
     }
 }

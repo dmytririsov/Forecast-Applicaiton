@@ -23,6 +23,7 @@
     <string name="event_details_button_alarm">Add Alarm</string>
     <string name="event_details_button_submit">Submit</string>
     <string name="event_details">Event details</string>
+    <string name="add_event_text">Add event</string>
 
 
 </resources>

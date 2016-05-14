@@ -13,23 +13,26 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Weather.WeatherActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:label="@string/app_name">
             <!--<intent-filter>-->
                 <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN" />-->
                 <!--<category android:name="android.intent.category.LAUNCHER" />!&ndash;&gt;-->
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".MainActivity"
-            android:label="Calendar and Weather"
-            android:screenOrientation="portrait">
+            android:label="Calendar and Weather">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".Calendar.EventDetails"
+        <activity android:name=".Calendar.EditEventActivity"
+            android:label="Calendar and Weather"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".Calendar.EventsListActivity"
             android:label="Calendar and Weather"
             android:screenOrientation="portrait">
 
