@@ -25,8 +25,8 @@ public class CalendarDaysAdapter extends BaseAdapter {
     private ImageView mDayEventIcon;
     private final Context mContext;
 
-    public CalendarDaysAdapter(Context context, int monthNumber) {
-        mCalendar = new GregorianCalendar(2016, monthNumber, 1);
+    public CalendarDaysAdapter(Context context, int monthNumber, int yearNumber) {
+        mCalendar = new GregorianCalendar(yearNumber, monthNumber, 1);
         mContext = context;
     }
 

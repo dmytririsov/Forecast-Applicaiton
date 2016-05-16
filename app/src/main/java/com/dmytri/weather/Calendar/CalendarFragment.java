@@ -60,7 +60,7 @@ public class CalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         Log.d(TAG, "on create view");
-        Calendar calendarInstance = Calendar.getInstance();
+        final Calendar calendarInstance = Calendar.getInstance();
         View rootView = inflater.inflate(R.layout.calendar_fragment, container, false);
         final GridView grid = (GridView) rootView.findViewById(R.id.calendar_days);
 
@@ -68,7 +68,9 @@ public class CalendarFragment extends Fragment {
         mNameOfMonth = calendarInstance.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US);
         mNameOfMonthTextView.setText(mNameOfMonth.toUpperCase() + " " + calendarInstance.get(Calendar.YEAR));
 
-        final CalendarDaysAdapter adapter = new CalendarDaysAdapter(getActivity(), calendarInstance.get(Calendar.MONTH));
+        final CalendarDaysAdapter adapter = new CalendarDaysAdapter(getActivity(),
+                calendarInstance.get(Calendar.MONTH),
+                calendarInstance.get(Calendar.YEAR));
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,14 +88,25 @@ public class CalendarFragment extends Fragment {
         mNextMonthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (Calendar.MONTH  == 12) {
+                    CalendarDaysAdapter newAdapter = new CalendarDaysAdapter(getActivity(),
+                            calendarInstance.get(Calendar.MONTH) + 1,
+                            calendarInstance.get(Calendar.YEAR) + 1);
+                    grid.setAdapter(newAdapter);
+                }
+                else {
+                    CalendarDaysAdapter newAdapter = new CalendarDaysAdapter(getActivity(),
+                            calendarInstance.get(Calendar.MONTH) + 1,
+                            calendarInstance.get(Calendar.YEAR));
+                    grid.setAdapter(newAdapter);
+                }
             }
         });
         mPrevMonthButton = (ImageButton) rootView.findViewById(R.id.imageButtonPrev);
         mPrevMonthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: implement next month button event
+
             }
         });
         return rootView;

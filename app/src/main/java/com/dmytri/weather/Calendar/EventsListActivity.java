@@ -63,8 +63,7 @@ public class EventsListActivity extends Activity {
                 events.add(event.getEventDetails());
             }
         }
-        events.add("Hey");
-        events.add("Goo");
+        events.add("Go");
         return events;
     }
 
