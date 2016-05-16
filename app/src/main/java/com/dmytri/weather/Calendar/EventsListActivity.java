@@ -1,9 +1,11 @@
 package com.dmytri.weather.Calendar;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -31,11 +33,26 @@ public class EventsListActivity extends Activity {
         Log.d(TAG, "OnCreate");
         setContentView(R.layout.events_list_acitivity);
         mEvents = new ArrayList<>();
-        mAddEventButton = (Button) findViewById(R.id.button_add_event);
+        Intent intent = getIntent();
         ListView view = (ListView) findViewById(R.id.event_list);
-        int dayOfYear = getIntent().getIntExtra(DAY_OF_YEAR_KEY, -1);
+        final int dayOfYear = intent.getIntExtra(DAY_OF_YEAR_KEY, -1);
+        final int position = intent.getIntExtra("position", -1);
+        final String month = intent.getStringExtra("month");
+        mAddEventButton = (Button) findViewById(R.id.button_add_event);
+        mAddEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "on click add event");
+                Intent intent = new Intent(v.getContext(), EditEventActivity.class);
+                intent.putExtra("position", position);
+                intent.putExtra("month", month);
+                v.getContext().startActivity(intent);
+            }
+        });
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.events_list_item, calculateEventsInDay(dayOfYear));
         view.setAdapter(arrayAdapter);
+
+
     }
 
     @Nullable

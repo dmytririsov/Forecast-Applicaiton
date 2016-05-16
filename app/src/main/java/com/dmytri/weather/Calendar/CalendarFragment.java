@@ -77,6 +77,8 @@ public class CalendarFragment extends Fragment {
                 int dayOfYear = adapter.getItem(position);
                 Intent intent = new Intent(getActivity(), EventsListActivity.class);
                 intent.putExtra(EventsListActivity.DAY_OF_YEAR_KEY, dayOfYear);
+                intent.putExtra("position", position + 1);
+                intent.putExtra("month", mNameOfMonth);
                 view.getContext().startActivity(intent);
             }
         });
