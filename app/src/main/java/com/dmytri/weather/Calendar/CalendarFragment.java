@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.dmytri.weather.R;
 
+import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
@@ -25,11 +26,18 @@ import java.util.Map;
 public class CalendarFragment extends Fragment {
 
     private static final String TAG = CalendarFragment.class.getSimpleName();
+    private static final int mOutOfNextMonth = 13;
+    private static final int mOutOfPrevMonth = 0;
 
     private String mNameOfMonth;
     private ImageButton mNextMonthButton;
     private ImageButton mPrevMonthButton;
+    private GridView grid;
+    private Calendar calendarInstance;
     private Map<String, CalendarDaysAdapter> mDayAdapters;
+    private CalendarDaysAdapter adapter;
+    private int mCurrentMonth;
+    private int mCurrentYear;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,16 +69,16 @@ public class CalendarFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         Log.d(TAG, "on create view");
         final Calendar calendarInstance = Calendar.getInstance();
-        View rootView = inflater.inflate(R.layout.calendar_fragment, container, false);
+        mCurrentMonth = calendarInstance.get(Calendar.MONTH) + 1;
+        mCurrentYear  = calendarInstance.get(Calendar.YEAR);
+        final View rootView = inflater.inflate(R.layout.calendar_fragment, container, false);
         final GridView grid = (GridView) rootView.findViewById(R.id.calendar_days);
 
-        TextView mNameOfMonthTextView = (TextView)rootView.findViewById(R.id.name_of_month);
-        mNameOfMonth = calendarInstance.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.US);
-        mNameOfMonthTextView.setText(mNameOfMonth.toUpperCase() + " " + calendarInstance.get(Calendar.YEAR));
+        final TextView mNameOfMonthTextView = (TextView)rootView.findViewById(R.id.name_of_month);
+        mNameOfMonth = calendarInstance.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+        mNameOfMonthTextView.setText(calendarInstance.get(Calendar.YEAR) + " " + mNameOfMonth.toUpperCase());
 
-        final CalendarDaysAdapter adapter = new CalendarDaysAdapter(getActivity(),
-                calendarInstance.get(Calendar.MONTH),
-                calendarInstance.get(Calendar.YEAR));
+        final CalendarDaysAdapter adapter = new CalendarDaysAdapter(getActivity(), mCurrentMonth, mCurrentYear);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -85,32 +93,49 @@ public class CalendarFragment extends Fragment {
             }
         });
         mNextMonthButton = (ImageButton)rootView.findViewById(R.id.imageButtonNext);
-        mNextMonthButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Calendar.MONTH  == 12) {
-                    CalendarDaysAdapter newAdapter = new CalendarDaysAdapter(getActivity(),
-                            calendarInstance.get(Calendar.MONTH) + 1,
-                            calendarInstance.get(Calendar.YEAR) + 1);
-                    grid.setAdapter(newAdapter);
-                }
-                else {
-                    CalendarDaysAdapter newAdapter = new CalendarDaysAdapter(getActivity(),
-                            calendarInstance.get(Calendar.MONTH) + 1,
-                            calendarInstance.get(Calendar.YEAR));
-                    grid.setAdapter(newAdapter);
-                }
-            }
-        });
+
         mPrevMonthButton = (ImageButton) rootView.findViewById(R.id.imageButtonPrev);
         mPrevMonthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d(TAG, "onClick NextMonth: "  + mCurrentMonth + " " + mCurrentYear);
+                mCurrentMonth--;
+                CalendarDaysAdapter newAdapter = new CalendarDaysAdapter(getActivity(),
+                        mCurrentMonth, mCurrentYear);
+                if (mCurrentMonth == mOutOfPrevMonth) {
+                    mCurrentYear--;
+                    mCurrentMonth = 12;
+                }
+                mNameOfMonth = getMonthFromInt(mCurrentMonth);
+                mNameOfMonthTextView.setText(mCurrentYear + " " + mNameOfMonth.toUpperCase(Locale.getDefault()));
+                grid.setAdapter(newAdapter);
+                adapter.notifyDataSetChanged();
             }
         });
+
+        mNextMonthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Current month: " + mNameOfMonth);
+                Log.d(TAG, "onClick NextMonth: "  + mCurrentMonth + " " + mCurrentYear);
+                mCurrentMonth++;
+                    CalendarDaysAdapter newAdapter = new CalendarDaysAdapter(getActivity(),
+                            mCurrentMonth, mCurrentYear);
+                if (mCurrentMonth == mOutOfNextMonth) {
+                    mCurrentMonth = 1;
+                    mCurrentYear++;
+                }
+                mNameOfMonth = getMonthFromInt(mCurrentMonth);
+                mNameOfMonthTextView.setText(mCurrentYear + " " + mNameOfMonth.toUpperCase(Locale.getDefault()));
+                grid.setAdapter(newAdapter);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
         return rootView;
     }
-
-
+    public String getMonthFromInt(int month) {
+        return new DateFormatSymbols().getMonths()[month-1];
+    }
 }

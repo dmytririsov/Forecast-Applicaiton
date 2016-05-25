@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private WeatherFragment mWeatherFragment;
     private int mTabPosition;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
