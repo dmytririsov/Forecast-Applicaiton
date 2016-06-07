@@ -1,7 +1,6 @@
 package com.dmytri.weather.Weather;
 
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -21,17 +20,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dmytri.weather.R;
+import com.dmytri.weather.Weather.Models.Model;
+import com.google.gson.Gson;
 
-import org.json.JSONObject;
-
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeatherFragment extends Fragment {
 
     private static final String TAG = WeatherFragment.class.getSimpleName();
-    private static final int TIME_TO_MILLISECONDS = 1000;
+    private static final int TIME_FROM_MILLISECONDS = 1000;
+    private static final String OPEN_WEATHER_MAP_API = "http://api.openweathermap.org/";
 
     private Button mUpdateButton;
     private Button mChangeCity;
@@ -41,6 +49,8 @@ public class WeatherFragment extends Fragment {
     private TextView mDetailsField;
     private TextView mCurrentTemperatureField;
     private TextView mWeatherIcon;
+    private long current_time = System.currentTimeMillis();
+
 
     private final Handler mHandler;
 
@@ -51,6 +61,7 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "City - " + CityPreference.getInstance(getActivity()).getCity());
         mWeatherFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/weathericons.ttf");
     }
 
@@ -72,7 +83,7 @@ public class WeatherFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "on click update");
                 Toast.makeText(getActivity(), "Data updated", Toast.LENGTH_SHORT).show();
-                updateWeatherData(CityPreference.getInstance(getActivity()).getCity());
+
             }
         });
         mChangeCity = (Button) rootView.findViewById(R.id.change_city);
@@ -83,6 +94,7 @@ public class WeatherFragment extends Fragment {
                 showInputDialog();
             }
         });
+        getJson(CityPreference.getInstance(getActivity()).getCity());
         return rootView;
     }
 
@@ -111,57 +123,68 @@ public class WeatherFragment extends Fragment {
 
     //This method performs function update
     public void updateWeatherData(final String city) {
-        // TODO fix tasks leak
-        GetWeatherTask task = new GetWeatherTask(getActivity(), new GetWeatherTask.OnLoadFinishedListener() {
-            @Override
-            public void onLoadFinished(JSONObject json) {
-                renderWeather(json);
-            }
-        });
+        getJson(city);
         if (city != null && !city.isEmpty()) {
             CityPreference.getInstance(getActivity()).setCity(city);
         }
-        task.execute(city);
     }
 
-    //This method performs render json data from input JSONObject
+    private void getJson (String city) {
+        //final DateFormat timeFormat = DateFormat.getTimeInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
+        calendar.setTimeInMillis(current_time);
+        mUpdateField.setText("Last update: " + sdf.format(calendar.getTime()));
+        Gson gson = new Gson();
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(OPEN_WEATHER_MAP_API)
+                .build();
+        final String query = city;
+        final String appid = "9c4a47ff53dff3ea499b0bd0f239df78";
+        final String units = "metric";
+        GetJson service = retrofit.create(GetJson.class);
+        Call<Model> call = service.getWeatherReport(query, appid, units);
+        Log.d(TAG, "Need query - " + OPEN_WEATHER_MAP_API +"data/2.5/weather?q=" + city + "&appid=9c4a47ff53dff3ea499b0bd0f239df78&units=metric");
+        call.enqueue(new Callback<Model>() {
+            @Override
+            public void onResponse(Call<Model> call, Response<Model> response) {
+                try {
+                    String city = response.body().getName();
+                    String country = response.body().getSys().getCountry();
+                    String status = response.body().getWeather().get(0).getDescription();
+                    String humidity = response.body().getMain().getHumidity().toString();
+                    String pressure = response.body().getMain().getPressure().toString();
+                    String wind = response.body().getWind().getSpeed().toString();
+                    Double temp = response.body().getMain().getTemp();
+                    Long sunrise = (long)response.body().getSys().getSunrise();
+                    Long sunset = (long)response.body().getSys().getSunset();
+                    String details =  response.body().getWeather().get(0).getId().toString();
+                    Integer updatedDetails = Integer.parseInt(details);
 
-    @SuppressLint("SetTextI18n")
-    // TODO remove all string to resources
-    public void renderWeather(JSONObject json) {
-        Log.d(TAG, "start weather rendering");
-        try {
-            DateFormat timeDateFormat = DateFormat.getDateTimeInstance();
-            DateFormat timeFormat = DateFormat.getTimeInstance();
 
-            mCityField.setText(json.getString("name").toUpperCase(Locale.US) +
-                    ", " + json.getJSONObject("sys").getString("country"));
-            JSONObject details = json.getJSONArray("weather").getJSONObject(0);
-            JSONObject main = json.getJSONObject("main");
-            long sunrise = json.getJSONObject("sys").getLong("sunrise");
-            String updateSunrise = timeFormat.format(new Date(sunrise * TIME_TO_MILLISECONDS));
-            long sunset = json.getJSONObject("sys").getLong("sunset");
-            String updateSunset = timeFormat.format(new Date(sunset * TIME_TO_MILLISECONDS));
-            JSONObject wind = json.getJSONObject("wind");
-            mDetailsField.setText(
-                    details.getString(getString(R.string.text_view_description_field)).toUpperCase(Locale.US) +
-                            "\n" + "Humidity: " + main.getString("humidity") + "%" +
-                            "\n" + "Pressure: " + main.getString("pressure") + "hPa" +
-                            "\n" + "Wind: " + wind.getString("speed") + "m/s" +
-                            "\n" + "Sunrise: " + updateSunrise +
-                            "\n" + "Sunset: " + updateSunset);
-            mCurrentTemperatureField.setText(String.format("%.1f", main.getDouble("temp")) + "℃"); //setting up details
-            //current time
-            String updateOn = timeDateFormat.format(new Date(json.getLong("dt") * TIME_TO_MILLISECONDS));
-            mUpdateField.setText("Last update: " + updateOn);
+                    mCityField.setText(city.toUpperCase() + ", " + country);
+                    mCurrentTemperatureField.setText(String.format("%.1f", temp) + "℃"); //setting up details
+                    setWeatherIcon(updatedDetails,
+                            sunrise * TIME_FROM_MILLISECONDS,
+                            sunset * TIME_FROM_MILLISECONDS);
+                    mDetailsField.setText(
+                                    "\n" + "Status: " + status +
+                                    "\n" + "Humidity: " + humidity + "%" +
+                                    "\n" + "Pressure: " + pressure + "hPa" +
+                                    "\n" + "Wind: " + wind + "m/s");
 
-            setWeatherIcon(details.getInt("id"),
-                    json.getJSONObject("sys").getLong("sunrise") * TIME_TO_MILLISECONDS,
-                    json.getJSONObject("sys").getLong("sunset") * TIME_TO_MILLISECONDS);
-            Log.d(TAG, "Weather was rendered");
-        } catch (Exception e) {
-            Log.e(TAG, "Field not found on JSON DATA");
-        }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Model> call, Throwable t) {
+
+            }
+        });
     }
 
     private void setWeatherIcon(int actulalId, long sunrise, long sunset) {
@@ -214,7 +237,7 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateWeatherData(CityPreference.getInstance(getActivity()).getCity());
+        //updateWeatherData(CityPreference.getInstance(getActivity()).getCity());
         Log.d(TAG, "OnResume");
     }
 
