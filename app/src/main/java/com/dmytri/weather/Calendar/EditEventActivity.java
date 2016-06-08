@@ -23,6 +23,9 @@ public class EditEventActivity extends AppCompatActivity {
     private TextView mEventDate;
     private EditText mEventEditText;
     private CalendarEvent mCalendarEvent;
+    private String event_description;
+    private String event_spinner;
+    private String event_data;
 
     private final String[] mEventType = {"Meeting", "Birthday", "Reminder"};
     private final static String TAG = EditEventActivity.class.getSimpleName();
@@ -37,8 +40,8 @@ public class EditEventActivity extends AppCompatActivity {
         mEventButtonAlarm = (Button)findViewById(R.id.button_set_alarm);
         mEventButtonSubmit = (Button)findViewById(R.id.event_button_submit);
         mEventDate = (TextView)findViewById(R.id.event_details_date);
-        String month = intent.getStringExtra("month");
-        int position = intent.getIntExtra("position", 1);
+        final String month = intent.getStringExtra("month");
+        final int position = intent.getIntExtra("position", 1);
         mEventDate.setText(month + ", " +  position);
         mEventEditText = (EditText) findViewById(R.id.event_details_edit_text);
 
@@ -53,14 +56,25 @@ public class EditEventActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        mEventButtonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                event_description = mEventEditText.getText().toString();
+                event_spinner = spinner.getSelectedItem().toString();
+                EventsModel eventsModel = new EventsModel(event_description, event_spinner);
+                eventsModel.save();
+            }
+        });
     }
+
+
 
 }
 

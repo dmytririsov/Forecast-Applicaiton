@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.activeandroid.ActiveAndroid;
 import com.dmytri.weather.Calendar.CalendarFragment;
 import com.dmytri.weather.Weather.WeatherFragment;
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         setupFragments(savedInstanceState);
         setupActionBar(savedInstanceState);
+        ActiveAndroid.initialize(this);
     }
 
     @Override
