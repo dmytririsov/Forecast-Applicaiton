@@ -38,8 +38,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WeatherFragment extends Fragment {
 
     private static final String TAG = WeatherFragment.class.getSimpleName();
-    private static final int TIME_FROM_MILLISECONDS = 1000;
     private static final String OPEN_WEATHER_MAP_API = "http://api.openweathermap.org/";
+    private static final String APPID = "9c4a47ff53dff3ea499b0bd0f239df78";
+    private static final String UNITS = "metric";
+    private static final String WEATHER_ICONS = "fonts/weathericons.ttf";
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String TIME_ZONE = "US/Central";
+    private static final int TIME_FROM_MILLISECONDS = 1000;
+    private static final int SUNNY_WEATHER = 800;
 
     private Button mUpdateButton;
     private Button mChangeCity;
@@ -62,7 +68,7 @@ public class WeatherFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "City - " + CityPreference.getInstance(getActivity()).getCity());
-        mWeatherFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/weathericons.ttf");
+        mWeatherFont = Typeface.createFromAsset(getActivity().getAssets(), WEATHER_ICONS);
     }
 
     @Nullable
@@ -130,9 +136,8 @@ public class WeatherFragment extends Fragment {
     }
 
     private void getJson (String city) {
-        //final DateFormat timeFormat = DateFormat.getTimeInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
-        GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.US);
+        GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone(TIME_ZONE));
         calendar.setTimeInMillis(current_time);
         mUpdateField.setText("Last update: " + sdf.format(calendar.getTime()));
         Gson gson = new Gson();
@@ -140,12 +145,9 @@ public class WeatherFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(OPEN_WEATHER_MAP_API)
                 .build();
-        final String query = city;
-        final String appid = "9c4a47ff53dff3ea499b0bd0f239df78";
-        final String units = "metric";
         GetJson service = retrofit.create(GetJson.class);
-        Call<Model> call = service.getWeatherReport(query, appid, units);
-        Log.d(TAG, "Need query - " + OPEN_WEATHER_MAP_API +"data/2.5/weather?q=" + city + "&appid=9c4a47ff53dff3ea499b0bd0f239df78&units=metric");
+        Call<Model> call = service.getWeatherReport(city, APPID, UNITS);
+        Log.d(TAG, "Need query - " + OPEN_WEATHER_MAP_API +"data/2.5/weather?q=" + city + "&appid=9c4a47ff53dff3ea499b0bd0f239df78&UNITS=metric");
         call.enqueue(new Callback<Model>() {
             @Override
             public void onResponse(Call<Model> call, Response<Model> response) {
@@ -191,8 +193,8 @@ public class WeatherFragment extends Fragment {
         int id = actulalId / 100;
         String icon = "";
         long currentTime = new Date().getTime();
-        final Activity activity = getActivity(); //TODO: string magic numbers
-        if (actulalId == 800) {
+        final Activity activity = getActivity();
+        if (actulalId == SUNNY_WEATHER) {
             if (currentTime >= sunrise && currentTime < sunset) {
                 icon = activity.getString(R.string.weather_sunny);
             } else {

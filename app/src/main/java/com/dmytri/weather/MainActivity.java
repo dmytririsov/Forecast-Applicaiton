@@ -1,8 +1,8 @@
 package com.dmytri.weather;
 
 
-import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -25,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActiveAndroid.initialize(this);
         Log.d(TAG, "onCreate");
         setContentView(R.layout.main_activity);
         setupFragments(savedInstanceState);
         setupActionBar(savedInstanceState);
-        ActiveAndroid.initialize(this);
+
     }
 
     @Override

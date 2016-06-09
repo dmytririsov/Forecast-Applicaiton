@@ -8,23 +8,26 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Events")
 public class EventsModel extends Model {
 
-    @Column(name = "event_description")
+    @Column(name = "ID", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    public int ID;
+    @Column(name = "Event_description")
     public String event_description;
-    @Column(name = "event_spinner")
+    @Column(name = "Event_spinner")
     public String event_spinner;
-    @Column(name = "event_data")
-    public String event_data;
+  /*  @Column(name = "Event_date")
+    public String event_date;*/
 
     public EventsModel() {
         super();
     }
 
-    public EventsModel(String event_description, String event_spinner){
+    public EventsModel(String event_description, int ID, String event_spinner){
         super();
 
         this.event_description = event_description;
+        this.ID = ID;
         this.event_spinner = event_spinner;
-        //this.event_data = event_data;
+        //this.event_date = event_date;
 
     }
 }

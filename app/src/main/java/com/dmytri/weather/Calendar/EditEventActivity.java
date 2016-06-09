@@ -3,7 +3,6 @@ package com.dmytri.weather.Calendar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dmytri.weather.R;
 
@@ -32,10 +32,9 @@ public class EditEventActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-       // CalendarEvent mCalendarEvent = new CalendarEvent();
         setContentView(R.layout.event_details);
         mEventButtonAlarm = (Button)findViewById(R.id.button_set_alarm);
         mEventButtonSubmit = (Button)findViewById(R.id.event_button_submit);
@@ -68,8 +67,13 @@ public class EditEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 event_description = mEventEditText.getText().toString();
                 event_spinner = spinner.getSelectedItem().toString();
-                EventsModel eventsModel = new EventsModel(event_description, event_spinner);
+                EventsModel eventsModel = new EventsModel(event_description, 10, event_spinner);
                 eventsModel.save();
+                Toast.makeText(getBaseContext().getApplicationContext(), "Event was added", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), EventsListActivity.class);
+                intent.putExtra("position", position);
+                intent.putExtra("month", month);
+                v.getContext().startActivity(intent);
             }
         });
     }
