@@ -18,13 +18,14 @@ import com.dmytri.weather.R;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Dmytri on 11.05.2016.
  */
 public class CalendarFragment extends Fragment {
 
+    public static final String POSITION_INTENT = "position";
+    public static final String MONTH_INTENT = "month";
     private static final String TAG = CalendarFragment.class.getSimpleName();
     private static final int mOutOfNextMonth = 13;
     private static final int mOutOfPrevMonth = 0;
@@ -32,10 +33,6 @@ public class CalendarFragment extends Fragment {
     private String mNameOfMonth;
     private ImageButton mNextMonthButton;
     private ImageButton mPrevMonthButton;
-    private GridView grid;
-    private Calendar calendarInstance;
-    private Map<String, CalendarDaysAdapter> mDayAdapters;
-    private CalendarDaysAdapter adapter;
     private int mCurrentMonth;
     private int mCurrentYear;
 
@@ -87,8 +84,8 @@ public class CalendarFragment extends Fragment {
                 int dayOfYear = adapter.getItem(position);
                 Intent intent = new Intent(getActivity(), EventsListActivity.class);
                 intent.putExtra(EventsListActivity.DAY_OF_YEAR_KEY, dayOfYear);
-                intent.putExtra("position", position + 1);
-                intent.putExtra("month", mNameOfMonth);
+                intent.putExtra(POSITION_INTENT, position + 1);
+                intent.putExtra(MONTH_INTENT, mNameOfMonth);
                 view.getContext().startActivity(intent);
             }
         });

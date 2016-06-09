@@ -29,7 +29,6 @@ public class EventsListActivity extends Activity {
     private Button mAddEventButton;
     private List<CalendarEvent> mEvents;
     private EventsModel eventsModel;
-    private String month;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +39,16 @@ public class EventsListActivity extends Activity {
         Intent intent = getIntent();
         ListView view = (ListView) findViewById(R.id.event_list);
         final int dayOfYear = intent.getIntExtra(DAY_OF_YEAR_KEY, DEFAULT_VALUE);
-        final int position = intent.getIntExtra("position", DEFAULT_VALUE);
-        final String month = intent.getStringExtra("month");
+        final int position = intent.getIntExtra(CalendarFragment.POSITION_INTENT, DEFAULT_VALUE);
+        final String month = intent.getStringExtra(CalendarFragment.MONTH_INTENT);
         mAddEventButton = (Button) findViewById(R.id.button_add_event);
         mAddEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "on click add event");
                 Intent intent = new Intent(v.getContext(), EditEventActivity.class);
-                intent.putExtra("position", position);
-                intent.putExtra("month", month);
+                intent.putExtra(CalendarFragment.POSITION_INTENT, position);
+                intent.putExtra(CalendarFragment.MONTH_INTENT, month);
                 v.getContext().startActivity(intent);
             }
         });

@@ -22,7 +22,6 @@ public class EditEventActivity extends AppCompatActivity {
     private Button mEventButtonSubmit;
     private TextView mEventDate;
     private EditText mEventEditText;
-    private CalendarEvent mCalendarEvent;
     private String event_description;
     private String event_spinner;
     private String event_data;
@@ -39,8 +38,8 @@ public class EditEventActivity extends AppCompatActivity {
         mEventButtonAlarm = (Button)findViewById(R.id.button_set_alarm);
         mEventButtonSubmit = (Button)findViewById(R.id.event_button_submit);
         mEventDate = (TextView)findViewById(R.id.event_details_date);
-        final String month = intent.getStringExtra("month");
-        final int position = intent.getIntExtra("position", 1);
+        final String month = intent.getStringExtra(CalendarFragment.MONTH_INTENT);
+        final int position = intent.getIntExtra(CalendarFragment.POSITION_INTENT, 1);
         mEventDate.setText(month + ", " +  position);
         mEventEditText = (EditText) findViewById(R.id.event_details_edit_text);
 
@@ -65,14 +64,14 @@ public class EditEventActivity extends AppCompatActivity {
         mEventButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                event_description = mEventEditText.getText().toString();
+                event_description = mEventEditText.getText().toString().isEmpty() ? "Description empty" : mEventEditText.getText().toString();
                 event_spinner = spinner.getSelectedItem().toString();
                 EventsModel eventsModel = new EventsModel(event_description, 10, event_spinner);
                 eventsModel.save();
                 Toast.makeText(getBaseContext().getApplicationContext(), "Event was added", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), EventsListActivity.class);
-                intent.putExtra("position", position);
-                intent.putExtra("month", month);
+                intent.putExtra(CalendarFragment.POSITION_INTENT, position);
+                intent.putExtra(CalendarFragment.MONTH_INTENT, month);
                 v.getContext().startActivity(intent);
             }
         });
