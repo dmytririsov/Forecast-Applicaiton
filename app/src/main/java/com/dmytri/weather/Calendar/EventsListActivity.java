@@ -38,6 +38,7 @@ public class EventsListActivity extends Activity {
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Log.d(TAG, "Hey bro, you click on item: " + mEventsDescriptions.get(position));
             }
         });
