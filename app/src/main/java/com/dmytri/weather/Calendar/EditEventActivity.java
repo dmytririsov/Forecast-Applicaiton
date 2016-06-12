@@ -66,7 +66,7 @@ public class EditEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 event_description = mEventEditText.getText().toString().isEmpty() ? "Description empty" : mEventEditText.getText().toString();
                 event_spinner = spinner.getSelectedItem().toString();
-                EventsModel eventsModel = new EventsModel(event_description, 10, event_spinner);
+                EventsModel eventsModel = new EventsModel(event_description, event_spinner);
                 eventsModel.save();
                 Toast.makeText(getBaseContext().getApplicationContext(), "Event was added", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), EventsListActivity.class);

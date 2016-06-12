@@ -38,5 +38,6 @@
         </activity>
         <meta-data android:name="AA_DB_NAME" android:value="1.0.0.0.1" />
         <meta-data android:name="AA_DB_VERSION" android:value="20" />
+        <!--<meta-data android:name="AA_MODELS" android:value="com.dmytri.weather.Calendar.EventsModel"/>-->
     </application>
 </manifest>

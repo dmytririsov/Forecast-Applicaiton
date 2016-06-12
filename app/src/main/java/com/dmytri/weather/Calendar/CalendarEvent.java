@@ -13,7 +13,7 @@ public class CalendarEvent {
     private EventType mEventType;
     private int mDayOfYear;
 
-    enum EventType {
+    public enum EventType {
         MEETING,
         BIRTHDAY,
         REMINDER,
