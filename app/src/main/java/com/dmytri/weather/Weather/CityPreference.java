@@ -28,7 +28,7 @@ public class CityPreference {
 
     public String getCity() {
         if (mCity == null) {
-            mCity = mPreferences.getString("city", "Kiev,UA"); //if not chosen city, as default Kiev
+            mCity = mPreferences.getString(CITY_KEY, "Kiev,UA"); //if not chosen city, as default Kiev
         }
         return mCity;
     }

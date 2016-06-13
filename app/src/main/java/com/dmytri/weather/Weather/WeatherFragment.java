@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
@@ -57,12 +56,6 @@ public class WeatherFragment extends Fragment {
     private TextView mWeatherIcon;
     private long current_time = System.currentTimeMillis();
 
-
-    private final Handler mHandler;
-
-    public WeatherFragment() {
-        mHandler = new Handler();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -171,7 +164,7 @@ public class WeatherFragment extends Fragment {
                             sunrise * TIME_FROM_MILLISECONDS,
                             sunset * TIME_FROM_MILLISECONDS);
                     mDetailsField.setText(
-                                    "\n" + "Status: " + status +
+                            "\n" + "Status: " + status +
                                     "\n" + "Humidity: " + humidity + "%" +
                                     "\n" + "Pressure: " + pressure + "hPa" +
                                     "\n" + "Wind: " + wind + "m/s");

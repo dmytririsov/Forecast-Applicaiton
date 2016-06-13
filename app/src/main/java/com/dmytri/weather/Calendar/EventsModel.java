@@ -12,17 +12,17 @@ public class EventsModel extends Model {
     public String event_description;
     @Column(name = "Event_spinner")
     public String event_spinner;
-  /*  @Column(name = "Event_date")
-    public String event_date;*/
+    @Column(name = "Event_date")
+    public String event_date;
 
     public EventsModel() {
         super();
     }
 
-    public EventsModel(String event_description, String event_spinner){
+    public EventsModel(String event_description, String event_spinner, String event_date){
         super();
         this.event_description = event_description;
         this.event_spinner = event_spinner;
-        //this.event_date = event_date;
+        this.event_date = event_date;
     }
 }

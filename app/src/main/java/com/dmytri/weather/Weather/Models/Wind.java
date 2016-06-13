@@ -9,6 +9,8 @@ public class Wind {
     private Double speed;
     @Expose
     private Integer deg;
+    @Expose
+    private Double gust;
 
 
     public Double getSpeed() {
@@ -25,6 +27,14 @@ public class Wind {
 
     public void setDeg(Integer deg) {
         this.deg = deg;
+    }
+
+    public Double getGust() {
+        return gust;
+    }
+
+    public void setGust(Double gust) {
+        this.gust = gust;
     }
 }
 
