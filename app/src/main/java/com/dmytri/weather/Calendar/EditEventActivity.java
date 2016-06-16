@@ -70,10 +70,18 @@ public class EditEventActivity extends AppCompatActivity {
                 EventsModel eventsModel = new EventsModel(event_description, event_spinner, event_date);
                 eventsModel.save();
                 Toast.makeText(getBaseContext().getApplicationContext(), "Event was added", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), EventsListActivity.class);
-                intent.putExtra(CalendarFragment.POSITION_INTENT, position);
-                intent.putExtra(CalendarFragment.MONTH_INTENT, month);
-                v.getContext().startActivity(intent);
+                Intent intentSubmit = new Intent(v.getContext(), EventsListActivity.class);
+                intentSubmit.putExtra(CalendarFragment.POSITION_INTENT, position);
+                intentSubmit.putExtra(CalendarFragment.MONTH_INTENT, month);
+                v.getContext().startActivity(intentSubmit);
+            }
+        });
+        mEventButtonAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentAlarm = new Intent(v.getContext(), AlarmActivity.class);
+                intentAlarm.putExtra("event_data", event_date);
+                v.getContext().startActivity(intentAlarm);
             }
         });
     }

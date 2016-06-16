@@ -85,7 +85,7 @@ public class EventsListActivity extends Activity {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            e.getMessage();
         }
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.events_list_item, mEventsDescriptions);
         view.setAdapter(arrayAdapter);

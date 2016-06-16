@@ -49,74 +49,94 @@
         android:layout_marginLeft="45dp"
         android:layout_width="wrap_content"
         android:layout_height="468dp"
-        android:columnWidth="50dp"
+        android:columnWidth="65dp"
         android:stretchMode="columnWidth"
         android:verticalSpacing="15dp"
         android:layout_below="@+id/imageButtonPrev"
         android:numColumns="7"/>
 
-    <GridLayout
+    <LinearLayout
 
-        android:layout_marginLeft="45dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginLeft="70dp"
         android:id="@+id/gridLayout"
         android:weightSum="7"
         android:layout_above="@+id/textView2"
         android:layout_below="@+id/imageButtonPrev">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_weight="1" />
+
         <TextView
             android:layout_marginTop="5dp"
             android:textColor="@color/text_color"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="S"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight="1"
+            android:layout_weight="1"/>
         <TextView
             android:layout_marginTop="5dp"
             android:textColor="@color/text_color"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="M"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight="1"
+            android:layout_weight="1"/>
         <TextView
             android:layout_marginTop="5dp"
             android:textColor="@color/text_color"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="T"
-            android:layout_columnWeight="1"/>
-        <TextView
-            android:layout_marginTop="5dp"
-            android:textColor="@color/text_color"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="T"
+            android:layout_columnWeight="1"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_marginTop="5dp"
+            android:textColor="@color/text_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="W"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight="1"
+            android:layout_weight="1"/>
         <TextView
             android:layout_marginTop="5dp"
             android:textColor="@color/text_color"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="T"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight="1"
+            android:layout_weight="1"/>
         <TextView
             android:layout_marginTop="5dp"
             android:textColor="@color/text_color"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="F"
-            android:layout_columnWeight="1"/>
+            android:layout_columnWeight="1"
+            android:layout_weight="1"/>
         <TextView
             android:layout_marginTop="5dp"
             android:textColor="@color/text_color"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="S"
-            android:layout_columnWeight="1"/>
-    </GridLayout>
+            android:layout_columnWeight="1"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dmytri.weather">
 
+
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
@@ -36,8 +38,16 @@
             android:label="Calendar and Weather">
 
         </activity>
+
+        <activity android:name=".Calendar.AlarmActivity"
+            android:label="AlarmReceiver"/>
+        <service android:name=".Calendar.AlarmService"
+            android:enabled="true">
+        </service>
+        <receiver android:name=".Calendar.AlarmReceiver"/>
+
         <meta-data android:name="AA_DB_NAME" android:value="1.0.0.0.1" />
         <meta-data android:name="AA_DB_VERSION" android:value="20" />
-        <!--<meta-data android:name="AA_MODELS" android:value="com.dmytri.weather.Calendar.EventsModel"/>-->
+
     </application>
 </manifest>

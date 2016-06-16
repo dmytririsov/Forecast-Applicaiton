@@ -55,7 +55,8 @@
         android:layout_alignRight="@+id/textView"
         android:layout_alignStart="@+id/event_details_edit_text"
         android:layout_below="@+id/button_set_alarm"
-        android:spinnerMode="dialog" />
+        android:spinnerMode="dialog"
+        android:layout_marginLeft="20dp" />
 
     <EditText
         android:id="@+id/event_details_edit_text"
