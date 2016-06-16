@@ -45,8 +45,9 @@ public class EventsListActivity extends Activity {
 
                 Log.d(TAG, "Hey bro, you click on item: " + mEventsDescriptions.get(position));
                 String temp  = mEventsDescriptions.get(position);
-                String strEnd=temp.replaceAll("[^\\d]","");
+                String strEnd = temp.replaceAll("[^\\d]","");
                 new Delete().from(EventsModel.class).where("Id = ?", strEnd).execute();
+                Toast.makeText(view.getContext(), "Event was removed", Toast.LENGTH_SHORT).show();
                 onCreate(savedInstanceState);
             }
         });
@@ -65,10 +66,6 @@ public class EventsListActivity extends Activity {
                 v.getContext().startActivity(intent);
             }
         });
-        mEventsDescriptions = updateList();
-        if (mEventsDescriptions.isEmpty()) {
-            mEventsDescriptions.add("Descryption is missing");
-        }
         try{
             List<EventsModel> eventDateFromDB =
                 new Select(new String[]{"Id, Event_description, Event_spinner"})
@@ -78,7 +75,7 @@ public class EventsListActivity extends Activity {
             List<String> eventDescriptionsFrom = new ArrayList<>();
             for (EventsModel model : eventDateFromDB) {
                 eventDescriptionsFrom.add(
-                        "ID: " + model.getId().toString() + "\n" +
+                                "ID: " + model.getId().toString() + "\n" +
                                 "Event description: " + model.event_description + "\n" +
                                 "Event spinner: " + model.event_spinner);
                 mEventsDescriptions = eventDescriptionsFrom;
@@ -87,23 +84,15 @@ public class EventsListActivity extends Activity {
         catch (Exception e) {
             e.getMessage();
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.events_list_item, mEventsDescriptions);
-        view.setAdapter(arrayAdapter);
-        Toast.makeText(getApplicationContext(), "To remove click on the item", Toast.LENGTH_SHORT).show();
-    }
-
-    private List<String> updateList() {
-        List<EventsModel> models = new Select(new String[]{"Id, Event_description, Event_spinner"}).from(EventsModel.class).execute();
-
-        List<String> eventDescriptions = new ArrayList<>();
-        for (EventsModel model : models) {
-            eventDescriptions.add(
-                    "ID: " + model.getId().toString() + "\n" +
-                    "Event description: " + model.event_description + "\n" +
-                    "Event spinner: " + model.event_spinner);
+        finally {
+            if (mEventsDescriptions == null) {
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.events_list_item);
+                view.setAdapter(arrayAdapter);
+            }
+            else {
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.events_list_item, mEventsDescriptions);
+                view.setAdapter(arrayAdapter);
+            }
         }
-        return eventDescriptions;
     }
-
-
 }

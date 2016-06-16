@@ -24,6 +24,7 @@
     <string name="event_details_button_submit">Submit</string>
     <string name="event_details">Event details</string>
     <string name="add_event_text">Add event</string>
+    <string name="to_remove_click_on_the_item">To remove click on the item</string>
 
 
 </resources>
