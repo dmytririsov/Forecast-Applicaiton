@@ -1,12 +1,13 @@
 package com.dmytri.weather.Calendar;
 
-import android.app.AlertDialog;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -14,7 +15,10 @@ import com.dmytri.weather.R;
 
 
 public class AlarmService extends IntentService {
+
+    private static final String TAG = AlarmService.class.getSimpleName();
     private NotificationManager alarmNotificationManager;
+    private Ringtone ringtone;
 
     public AlarmService() {
         super("AlarmService");
@@ -22,11 +26,22 @@ public class AlarmService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        sendNotification("Wake up!");
+        sendNotification("Tap to stop!");
     }
 
+    public void stop() {
+        if (ringtone != null) {
+            ringtone.stop();
+        }
+    }
     private void sendNotification(String msg) {
-        Log.d("AlarmService", "Preparing to send notification...: " + msg);
+        Log.d(TAG, "Preparing to send notification...: " + msg);
+        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        if (alarmUri == null) {
+            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
+        ringtone = RingtoneManager.getRingtone(this, alarmUri);
+        ringtone.play();
         alarmNotificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -44,21 +59,7 @@ public class AlarmService extends IntentService {
 
         alarmNotificationBuilder.setContentIntent(contentIntent);
         alarmNotificationManager.notify(1, alarmNotificationBuilder.build());
-        Log.d("AlarmService", "Notification sent.");
-        /*AlertDialog.Builder builder = new AlertDialog.Builder();
-        builder.setMessage("Are you sure you want to exit?").setCancelable(
-                false).setPositiveButton("Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                }).setNegativeButton("No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();*/
+        Log.d(TAG, "Notification sent.");
+
     }
 }

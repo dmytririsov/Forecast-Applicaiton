@@ -86,8 +86,6 @@ public class EditEventActivity extends AppCompatActivity {
         });
     }
 
-
-
 }
 
 

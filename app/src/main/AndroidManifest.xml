@@ -17,10 +17,6 @@
         <activity
             android:name=".Weather.WeatherActivity"
             android:label="@string/app_name">
-            <!--<intent-filter>-->
-                <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />!&ndash;&gt;-->
-            <!--</intent-filter>-->
         </activity>
         <activity android:name=".MainActivity"
             android:label="Calendar and Weather">
@@ -32,22 +28,28 @@
 
         <activity android:name=".Calendar.EditEventActivity"
             android:label="Calendar and Weather">
-
         </activity>
+
         <activity android:name=".Calendar.EventsListActivity"
             android:label="Calendar and Weather">
-
         </activity>
 
         <activity android:name=".Calendar.AlarmActivity"
             android:label="AlarmReceiver"/>
+
+        <activity android:name=".Calendar.AlarmAlertDialog"
+            android:label="AlarmReceiver"/>
+
         <service android:name=".Calendar.AlarmService"
             android:enabled="true">
         </service>
         <receiver android:name=".Calendar.AlarmReceiver"/>
 
-        <meta-data android:name="AA_DB_NAME" android:value="1.0.0.0.1" />
-        <meta-data android:name="AA_DB_VERSION" android:value="20" />
+        <meta-data android:name="AA_DB_NAME" android:value="1.0.0.0.1"/>
+        <meta-data android:name="AA_DB_VERSION" android:value="20"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
     </application>
 </manifest>
