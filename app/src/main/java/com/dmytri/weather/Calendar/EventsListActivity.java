@@ -1,5 +1,6 @@
 package com.dmytri.weather.Calendar;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ public class EventsListActivity extends Activity {
 
     private Button mAddEventButton;
     private List <String> mEventsDescriptions;
-    private List<EventsModel> models;
+    private List <String> mIdFromDB;
     private String eventDate;
 
     @Override
@@ -43,8 +44,8 @@ public class EventsListActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Log.d(TAG, "Hey bro, you click on item: " + mEventsDescriptions.get(position));
-                String temp  = mEventsDescriptions.get(position);
+                Log.d(TAG, "Hey bro, you click on item: " + mIdFromDB.get(position));
+                String temp  = mIdFromDB.get(position);
                 String strEnd = temp.replaceAll("[^\\d]","");
                 new Delete().from(EventsModel.class).where("Id = ?", strEnd).execute();
                 Toast.makeText(view.getContext(), "Event was removed", Toast.LENGTH_SHORT).show();
@@ -67,20 +68,27 @@ public class EventsListActivity extends Activity {
             }
         });
         try{
-            List<EventsModel> eventDateFromDB =
-                new Select(new String[]{"Id, Event_description, Event_spinner"})
+            List<EventsModel> eventDateFromDB = new Select(new String[]{"Id, Event_description, Event_spinner"})
                         .from(EventsModel.class)
                         .where("Event_date = ?", eventDate)
                         .execute();
             List<String> eventDescriptionsFrom = new ArrayList<>();
             for (EventsModel model : eventDateFromDB) {
                 eventDescriptionsFrom.add(
-                                "ID: " + model.getId().toString() + "\n" +
                                 "Event description: " + model.event_description + "\n" +
                                 "Event spinner: " + model.event_spinner);
                 mEventsDescriptions = eventDescriptionsFrom;
+                }
+            List<EventsModel> idFromDB = new Select(new String[]{"Id"})
+                    .from(EventsModel.class)
+                    .where("Event_date = ?", eventDate)
+                    .execute();
+            List<String> eventIdFrom = new ArrayList<>();
+            for (EventsModel model : idFromDB) {
+                eventIdFrom.add("ID: " + model.getId().toString());
+                mIdFromDB = eventIdFrom;
+                }
             }
-        }
         catch (Exception e) {
             e.getMessage();
         }

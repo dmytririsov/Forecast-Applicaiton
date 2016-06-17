@@ -14,38 +14,48 @@ import android.util.Log;
 
 public class AlarmAlertDialog extends Activity {
     private static final String TAG = AlarmAlertDialog.class.getSimpleName();
-    private Intent intent;
+    private AlarmService mAlarmService;
+    private boolean mBound = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        intent = new Intent(this, AlarmService.class);
-        startBind();
         displayAlert();
     }
-    protected ServiceConnection mServerConn = new ServiceConnection() {
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, AlarmService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
+
+    }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
         @Override
-        public void onServiceConnected(ComponentName name, IBinder binder) {
-            Log.d(TAG, "onServiceConnected");
-            AlarmService binderService = (AlarmService) binder;
-            binderService.stop();
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            AlarmService.LocalBinder binder = (AlarmService.LocalBinder) service;
+            mAlarmService = binder.getService();
+            mBound = true;
+
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            Log.d(TAG, "onServiceDisconnected");
+            mBound = false;
         }
     };
-
-    public void startBind() {
-        bindService(intent, mServerConn, Context.BIND_AUTO_CREATE);
-        startService(intent);
-    }
-
-    public void stopBind() {
-        stopService(new Intent(this, AlarmService.class));
-        unbindService(mServerConn);
-    }
 
     private void displayAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -55,6 +65,7 @@ public class AlarmAlertDialog extends Activity {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(AlarmAlertDialog.this, EventsListActivity.class);
                         startActivity(intent);
+                        mAlarmService.stop();
                         dialog.cancel();
                     }
                 });

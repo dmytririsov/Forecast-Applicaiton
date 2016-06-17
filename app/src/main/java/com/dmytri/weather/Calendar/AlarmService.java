@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Binder;
+import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -19,6 +21,20 @@ public class AlarmService extends IntentService {
     private static final String TAG = AlarmService.class.getSimpleName();
     private NotificationManager alarmNotificationManager;
     private Ringtone ringtone;
+    private final IBinder mBinder = new LocalBinder();
+
+    public class LocalBinder extends Binder {
+        AlarmService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return AlarmService.this;
+        }
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
+
 
     public AlarmService() {
         super("AlarmService");

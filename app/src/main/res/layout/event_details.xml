@@ -37,26 +37,25 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/event_details_spinner"
-        android:layout_marginLeft="39dp"
-        android:layout_marginStart="39dp"
-        android:layout_marginTop="39dp"
-        android:layout_toEndOf="@+id/event_details_date"
-        android:layout_toRightOf="@+id/event_details_date"
+        android:layout_marginTop="40dp"
         android:text="@string/event_details"
-        android:textSize="11dp" />
+        android:textSize="11dp"
+        android:layout_below="@+id/event_details_spinner"
+        android:layout_alignLeft="@+id/event_details_date"
+        android:layout_alignStart="@+id/event_details_date"
+        android:layout_toStartOf="@+id/event_button_submit"
+        android:layout_alignRight="@+id/event_details_spinner"
+        android:layout_alignEnd="@+id/event_details_spinner" />
 
     <Spinner
         android:id="@+id/event_details_spinner"
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_alignEnd="@+id/textView"
         android:layout_alignLeft="@+id/event_details_edit_text"
-        android:layout_alignRight="@+id/textView"
         android:layout_alignStart="@+id/event_details_edit_text"
         android:layout_below="@+id/button_set_alarm"
         android:spinnerMode="dialog"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginLeft="10dp" />
 
     <EditText
         android:id="@+id/event_details_edit_text"
@@ -67,8 +66,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:background="@drawable/border"
         android:ems="10"
         android:inputType="textMultiLine" />

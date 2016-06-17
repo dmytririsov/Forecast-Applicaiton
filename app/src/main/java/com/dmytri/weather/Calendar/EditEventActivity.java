@@ -25,10 +25,8 @@ public class EditEventActivity extends AppCompatActivity {
     private String event_description;
     private String event_spinner;
     private String event_date;
-
     private final String[] mEventType = {"Meeting", "Birthday", "Reminder"};
     private final static String TAG = EditEventActivity.class.getSimpleName();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +41,8 @@ public class EditEventActivity extends AppCompatActivity {
         mEventDate.setText(month + ", " +  position);
         mEventEditText = (EditText) findViewById(R.id.event_details_edit_text);
 
-
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, mEventType);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-
 
         final Spinner spinner = (Spinner) findViewById(R.id.event_details_spinner);
         spinner.setAdapter(adapter);
@@ -60,6 +56,7 @@ public class EditEventActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
 
         mEventButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +82,6 @@ public class EditEventActivity extends AppCompatActivity {
             }
         });
     }
-
 }
 
 
