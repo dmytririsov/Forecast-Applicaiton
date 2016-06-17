@@ -27,18 +27,18 @@
         </activity>
 
         <activity android:name=".Calendar.EditEventActivity"
-            android:label="Calendar and Weather">
+            android:label="Edit event">
         </activity>
 
         <activity android:name=".Calendar.EventsListActivity"
-            android:label="Calendar and Weather">
+            android:label="Events list">
         </activity>
 
         <activity android:name=".Calendar.AlarmActivity"
-            android:label="AlarmReceiver"/>
+            android:label="Alarm"/>
 
         <activity android:name=".Calendar.AlarmAlertDialog"
-            android:label="AlarmReceiver"/>
+            android:label="Alarm"/>
 
         <service android:name=".Calendar.AlarmService"
             android:enabled="true">

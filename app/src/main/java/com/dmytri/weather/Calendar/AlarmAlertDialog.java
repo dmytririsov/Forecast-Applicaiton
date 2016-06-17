@@ -9,10 +9,11 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 
-public class AlarmAlertDialog extends Activity {
+public class AlarmAlertDialog extends AppCompatActivity {
     private static final String TAG = AlarmAlertDialog.class.getSimpleName();
     private AlarmService mAlarmService;
     private boolean mBound = false;
@@ -27,6 +28,7 @@ public class AlarmAlertDialog extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart");
         Intent intent = new Intent(this, AlarmService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
@@ -45,6 +47,7 @@ public class AlarmAlertDialog extends Activity {
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.d(TAG, "onServiceConnected");
             AlarmService.LocalBinder binder = (AlarmService.LocalBinder) service;
             mAlarmService = binder.getService();
             mBound = true;

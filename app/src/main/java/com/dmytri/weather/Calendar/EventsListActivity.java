@@ -1,10 +1,11 @@
 package com.dmytri.weather.Calendar;
 
-import android.app.ActionBar;
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,7 +23,7 @@ import java.util.List;
 /**
  * @author Dmytri on 15.05.2016.
  */
-public class EventsListActivity extends Activity {
+public class EventsListActivity extends AppCompatActivity {
 
     public static final String DAY_OF_YEAR_KEY = "dayOfYear";
     private static final String TAG = EventsListActivity.class.getSimpleName();
@@ -34,12 +35,26 @@ public class EventsListActivity extends Activity {
     private String eventDate;
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+            switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "OnCreate");
-        Intent intent = getIntent();
         setContentView(R.layout.events_list_acitivity);
+        Intent intent = getIntent();
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         ListView view = (ListView) findViewById(R.id.event_list);
+        assert view != null;
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -49,7 +64,6 @@ public class EventsListActivity extends Activity {
                 String strEnd = temp.replaceAll("[^\\d]","");
                 new Delete().from(EventsModel.class).where("Id = ?", strEnd).execute();
                 Toast.makeText(view.getContext(), "Event was removed", Toast.LENGTH_SHORT).show();
-                onCreate(savedInstanceState);
             }
         });
         final int position = intent.getIntExtra(CalendarFragment.POSITION_INTENT, DEFAULT_VALUE);
@@ -67,14 +81,16 @@ public class EventsListActivity extends Activity {
                 v.getContext().startActivity(intent);
             }
         });
+
         try{
-            List<EventsModel> eventDateFromDB = new Select(new String[]{"Id, Event_description, Event_spinner"})
+            List<EventsModel> eventDateFromDB = new Select(new String[]{"Id, Event_description, Event_spinner, Event_date"})
                         .from(EventsModel.class)
                         .where("Event_date = ?", eventDate)
                         .execute();
             List<String> eventDescriptionsFrom = new ArrayList<>();
             for (EventsModel model : eventDateFromDB) {
                 eventDescriptionsFrom.add(
+                                "Event date: " + model.event_date + "\n" +
                                 "Event description: " + model.event_description + "\n" +
                                 "Event spinner: " + model.event_spinner);
                 mEventsDescriptions = eventDescriptionsFrom;

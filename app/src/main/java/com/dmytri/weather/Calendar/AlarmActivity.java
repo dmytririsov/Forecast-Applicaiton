@@ -6,7 +6,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -16,7 +18,7 @@ import com.dmytri.weather.R;
 
 import java.util.Calendar;
 
-public class AlarmActivity extends Activity {
+public class AlarmActivity extends AppCompatActivity {
 
     private static final String TAG = AlarmActivity.class.getSimpleName();
 
@@ -26,6 +28,16 @@ public class AlarmActivity extends Activity {
     private static AlarmActivity inst;
     private TextView alarmTextView;
     private ToggleButton toggleButton;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onStart() {
@@ -41,6 +53,8 @@ public class AlarmActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alarm_activity);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toggleButton = (ToggleButton)findViewById(R.id.alarmToggle);
         timePicker = (TimePicker)findViewById(R.id.alarmTimePicker);
         alarmTextView = (TextView)findViewById(R.id.alarmText);

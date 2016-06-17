@@ -4,6 +4,8 @@ package com.dmytri.weather.Calendar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,10 +31,22 @@ public class EditEventActivity extends AppCompatActivity {
     private final static String TAG = EditEventActivity.class.getSimpleName();
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         setContentView(R.layout.event_details);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mEventButtonAlarm = (Button)findViewById(R.id.button_set_alarm);
         mEventButtonSubmit = (Button)findViewById(R.id.event_button_submit);
         mEventDate = (TextView)findViewById(R.id.event_details_date);
@@ -61,6 +75,7 @@ public class EditEventActivity extends AppCompatActivity {
         mEventButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick mEventButtonSubmit");
                 event_description = mEventEditText.getText().toString().isEmpty() ? "Description empty" : mEventEditText.getText().toString();
                 event_spinner = spinner.getSelectedItem().toString();
                 event_date = month + ", " +  Integer.toString(position);
@@ -76,6 +91,7 @@ public class EditEventActivity extends AppCompatActivity {
         mEventButtonAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick mEventButtonAlarm");
                 Intent intentAlarm = new Intent(v.getContext(), AlarmActivity.class);
                 intentAlarm.putExtra("event_data", event_date);
                 v.getContext().startActivity(intentAlarm);

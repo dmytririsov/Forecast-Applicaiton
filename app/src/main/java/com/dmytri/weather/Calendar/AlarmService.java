@@ -19,6 +19,7 @@ import com.dmytri.weather.R;
 public class AlarmService extends IntentService {
 
     private static final String TAG = AlarmService.class.getSimpleName();
+    private static final String TAP_TO_STOP = "Tap to stop!";
     private NotificationManager alarmNotificationManager;
     private Ringtone ringtone;
     private final IBinder mBinder = new LocalBinder();
@@ -42,7 +43,7 @@ public class AlarmService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        sendNotification("Tap to stop!");
+        sendNotification(TAP_TO_STOP);
     }
 
     public void stop() {
@@ -50,6 +51,7 @@ public class AlarmService extends IntentService {
             ringtone.stop();
         }
     }
+
     private void sendNotification(String msg) {
         Log.d(TAG, "Preparing to send notification...: " + msg);
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
