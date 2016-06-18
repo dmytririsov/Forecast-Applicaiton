@@ -1,4 +1,4 @@
-package com.dmytri.weather.Calendar;
+package com.dmytri.weather.calendar.alarm_logic;
 
 import android.app.IntentService;
 import android.app.NotificationManager;

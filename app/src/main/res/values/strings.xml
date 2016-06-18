@@ -25,6 +25,10 @@
     <string name="event_details">Event details</string>
     <string name="add_event_text">Add event</string>
     <string name="to_remove_click_on_the_item">To remove click on the item</string>
+    <string name="action_settings">Settings</string>
+    <string name="forecast_title_change_city">Change city</string>
+    <string name="forecast_positive_button">Go</string>
+    <string name="toast_data_updated">Data updated</string>
 
 
 </resources>

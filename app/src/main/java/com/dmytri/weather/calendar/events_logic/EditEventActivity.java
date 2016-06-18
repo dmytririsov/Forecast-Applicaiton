@@ -1,4 +1,4 @@
-package com.dmytri.weather.Calendar;
+package com.dmytri.weather.calendar.events_logic;
 
 
 import android.content.Intent;
@@ -15,6 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dmytri.weather.calendar.CalendarFragment;
+import com.dmytri.weather.calendar.alarm_logic.AlarmActivity;
+import com.dmytri.weather.calendar.data.EventsModel;
 import com.dmytri.weather.R;
 
 public class EditEventActivity extends AppCompatActivity {
@@ -60,7 +63,7 @@ public class EditEventActivity extends AppCompatActivity {
 
         final Spinner spinner = (Spinner) findViewById(R.id.event_details_spinner);
         spinner.setAdapter(adapter);
-        spinner.setPrompt("Event details"); //for click in spinner event
+        spinner.setPrompt("Event details");
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

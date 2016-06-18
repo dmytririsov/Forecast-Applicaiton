@@ -1,4 +1,4 @@
-package com.dmytri.weather.Weather;
+package com.dmytri.weather.weather;
 /*
     This class is responsible for set default city if user not chosen city.
     Now as default city - Kiev

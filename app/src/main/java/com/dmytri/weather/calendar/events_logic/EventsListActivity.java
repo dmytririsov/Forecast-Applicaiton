@@ -1,4 +1,4 @@
-package com.dmytri.weather.Calendar;
+package com.dmytri.weather.calendar.events_logic;
 
 
 import android.content.Intent;
@@ -16,13 +16,13 @@ import android.widget.Toast;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.dmytri.weather.R;
+import com.dmytri.weather.calendar.CalendarFragment;
+import com.dmytri.weather.calendar.data.EventsModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Dmytri on 15.05.2016.
- */
+
 public class EventsListActivity extends AppCompatActivity {
 
     public static final String DAY_OF_YEAR_KEY = "dayOfYear";
@@ -86,7 +86,7 @@ public class EventsListActivity extends AppCompatActivity {
             List<EventsModel> eventDateFromDB = new Select(new String[]{"Id, Event_description, Event_spinner, Event_date"})
                         .from(EventsModel.class)
                         .where("Event_date = ?", eventDate)
-                        .execute();
+                        .executeSingle();
             List<String> eventDescriptionsFrom = new ArrayList<>();
             for (EventsModel model : eventDateFromDB) {
                 eventDescriptionsFrom.add(

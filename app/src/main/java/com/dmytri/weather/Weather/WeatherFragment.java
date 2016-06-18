@@ -1,4 +1,4 @@
-package com.dmytri.weather.Weather;
+package com.dmytri.weather.weather;
 
 
 import android.app.Activity;
@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dmytri.weather.R;
-import com.dmytri.weather.Weather.Models.Model;
+import com.dmytri.weather.weather.models.Model;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -65,7 +65,7 @@ public class WeatherFragment extends Fragment {
     }
 
     @Nullable
-    @Override/* Inflate layout */
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         Log.d(TAG, "onCreateView");
@@ -81,7 +81,8 @@ public class WeatherFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "on click update");
-                Toast.makeText(getActivity(), "Data updated", Toast.LENGTH_SHORT).show();
+                getJson(CityPreference.getInstance(getActivity()).getCity());
+                Toast.makeText(getActivity(), R.string.toast_data_updated, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -99,11 +100,11 @@ public class WeatherFragment extends Fragment {
 
     public void showInputDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Change city");
+        builder.setTitle(R.string.forecast_title_change_city);
         final EditText input = new EditText(getActivity());
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
-        builder.setPositiveButton("Go", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.forecast_positive_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (!input.getText().toString().isEmpty()) {
@@ -120,7 +121,6 @@ public class WeatherFragment extends Fragment {
         builder.show();
     }
 
-    //This method performs function update
     public void updateWeatherData(final String city) {
         getJson(city);
         if (city != null && !city.isEmpty()) {
@@ -138,7 +138,7 @@ public class WeatherFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(OPEN_WEATHER_MAP_API)
                 .build();
-        GetJson service = retrofit.create(GetJson.class);
+        RestAPI service = retrofit.create(RestAPI.class);
         Call<Model> call = service.getWeatherReport(city, APPID, UNITS);
         Log.d(TAG, "Need query - " + OPEN_WEATHER_MAP_API +"data/2.5/weather?q=" + city + "&appid=9c4a47ff53dff3ea499b0bd0f239df78&UNITS=metric");
         call.enqueue(new Callback<Model>() {
@@ -164,11 +164,10 @@ public class WeatherFragment extends Fragment {
                             sunrise * TIME_FROM_MILLISECONDS,
                             sunset * TIME_FROM_MILLISECONDS);
                     mDetailsField.setText(
-                            "\n" + "Status: " + status +
+                                    "\n" + "Status: " + status +
                                     "\n" + "Humidity: " + humidity + "%" +
                                     "\n" + "Pressure: " + pressure + "hPa" +
                                     "\n" + "Wind: " + wind + "m/s");
-
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -182,12 +181,12 @@ public class WeatherFragment extends Fragment {
         });
     }
 
-    private void setWeatherIcon(int actulalId, long sunrise, long sunset) {
-        int id = actulalId / 100;
+    private void setWeatherIcon(int actualId, long sunrise, long sunset) {
+        int id = actualId / 100;
         String icon = "";
         long currentTime = new Date().getTime();
         final Activity activity = getActivity();
-        if (actulalId == SUNNY_WEATHER) {
+        if (actualId == SUNNY_WEATHER) {
             if (currentTime >= sunrise && currentTime < sunset) {
                 icon = activity.getString(R.string.weather_sunny);
             } else {

@@ -1,4 +1,4 @@
-package com.dmytri.weather.Weather.Models;
+package com.dmytri.weather.weather.models;
 
 import com.google.gson.annotations.Expose;
 

@@ -1,11 +1,14 @@
-package com.dmytri.weather.Calendar;
+package com.dmytri.weather.calendar.alarm_logic;
 
 
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.WakefulBroadcastReceiver;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -25,7 +28,6 @@ public class AlarmActivity extends AppCompatActivity {
     private AlarmManager alarmManager;
     private TimePicker timePicker;
     private PendingIntent pendingIntent;
-    private static AlarmActivity inst;
     private TextView alarmTextView;
     private ToggleButton toggleButton;
 
@@ -42,11 +44,6 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        inst = this;
-    }
-
-    public static AlarmActivity instance() {
-        return inst;
     }
 
     @Override
@@ -81,4 +78,22 @@ public class AlarmActivity extends AppCompatActivity {
     public void setAlarmText(String alarmText) {
         alarmTextView.setText(alarmText);
     }
+
+    public class AlarmReceiver extends WakefulBroadcastReceiver {
+
+        private final String TAG = AlarmReceiver.class.getSimpleName();
+
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+            Log.d(TAG, "onRecieve");
+            setAlarmText("Alarm! Wake up! Wake up!");
+            ComponentName comp = new ComponentName(context.getPackageName(), AlarmService.class.getName());
+            startWakefulService(context, (intent.setComponent(comp)));
+            Intent intent1 = new Intent(context, AlarmAlertDialog.class);
+            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+            context.startActivity(intent1);
+            setResultCode(Activity.RESULT_OK);
+        }
+    }
 }
+

@@ -1,4 +1,4 @@
-package com.dmytri.weather.Calendar;
+package com.dmytri.weather.calendar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.dmytri.weather.R;
+import com.dmytri.weather.calendar.events_logic.EventsListActivity;
 
 import java.text.DateFormatSymbols;
 import java.util.Calendar;

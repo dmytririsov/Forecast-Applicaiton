@@ -2,24 +2,25 @@ package com.dmytri.weather;
 
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.activeandroid.ActiveAndroid;
-import com.dmytri.weather.Calendar.CalendarFragment;
-import com.dmytri.weather.Weather.WeatherFragment;
+import com.dmytri.weather.calendar.CalendarFragment;
+import com.dmytri.weather.weather.WeatherFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String CALENDAR_FRAGMENT_KEY = "calendarFragment";
-    private static final String WEATHER_FRAGMENT_KEY = "weatherFragment";
-    private static final String TAB_INDEX_KEY = "tabIndex";
+    private static final String TEXT_CALENDAR = "Calendar";
+    private static final String TEXT_FORECAST = "Forecast";
 
     private CalendarFragment mCalendarFragment;
     private WeatherFragment mWeatherFragment;
-    private int mTabPosition;
 
 
     @Override
@@ -29,7 +30,56 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate");
         setContentView(R.layout.main_activity);
         setupFragments(savedInstanceState);
-        setupActionBar(savedInstanceState);
+        getSupportActionBar().setElevation(0);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        if (tabLayout != null) {
+            tabLayout.addTab(tabLayout.newTab().setText(TEXT_CALENDAR));
+            tabLayout.addTab(tabLayout.newTab().setText(TEXT_FORECAST));
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+
+            final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+            final PagerAdapter adapter = new PagerAdapter
+                    (getSupportFragmentManager(), tabLayout.getTabCount());
+            if (viewPager != null) {
+                viewPager.setAdapter(adapter);
+            }
+
+            if (viewPager != null) {
+                viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            }
+            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    if (viewPager != null) {
+                        viewPager.setCurrentItem(tab.getPosition());
+                    }
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
 
     }
 
@@ -51,12 +101,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "OnStop");
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(TAB_INDEX_KEY, mTabPosition);
-    }
-
     private void setupFragments(Bundle savedInstance) {
         if (mCalendarFragment == null) {
             mCalendarFragment = new CalendarFragment();
@@ -66,72 +110,4 @@ public class MainActivity extends AppCompatActivity {
             mWeatherFragment = new WeatherFragment();
         }
     }
-
-    private void setupActionBar(final Bundle savedInstance) {
-
-        ActionBar actionBar = getSupportActionBar();
-        try {
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-            ActionBar.Tab tabCalendar = actionBar.newTab();
-            tabCalendar.setText("Calendar");
-            tabCalendar.setTabListener(new ActionBar.TabListener() {
-                @Override
-                public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-                    Log.d(TAG, "Calendar");
-                    mTabPosition = 0;
-                    ft.replace(R.id.container, mCalendarFragment);
-                }
-
-                @Override
-                public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-                    // ignore
-                }
-
-                @Override
-                public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-                    // ignore
-                }
-            });
-            actionBar.addTab(tabCalendar);
-
-            ActionBar.Tab tabWeather = actionBar.newTab();
-            tabWeather.setText("Weather");
-            tabWeather.setTabListener(new ActionBar.TabListener() {
-                @Override
-                public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
-                    Log.d(TAG, "Weather");
-                    mTabPosition = 1;
-                    ft.replace(R.id.container, mWeatherFragment);
-                }
-
-                @Override
-                public void onTabUnselected(ActionBar.Tab tab,
-                                            android.support.v4.app.FragmentTransaction ft) {
-                    // ignore
-                }
-
-                @Override
-                public void onTabReselected(ActionBar.Tab tab,
-                                            android.support.v4.app.FragmentTransaction ft) {
-                    // ignore
-                }
-            });
-            actionBar.addTab(tabWeather);
-
-            // TODO investigate how to improve selection of tabs
-            if (savedInstance != null) {
-                mTabPosition = savedInstance.getInt(TAB_INDEX_KEY);
-                if (mTabPosition == 0) {
-                    actionBar.selectTab(tabCalendar);
-                } else {
-                    actionBar.selectTab(tabWeather);
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error");
-            e.printStackTrace();
-        }
-    }
-
 }

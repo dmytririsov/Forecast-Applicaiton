@@ -1,4 +1,4 @@
-package com.dmytri.weather.Calendar;
+package com.dmytri.weather.calendar.data;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;

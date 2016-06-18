@@ -1,6 +1,5 @@
-package com.dmytri.weather.Calendar;
+package com.dmytri.weather.calendar.alarm_logic;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,6 +10,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.dmytri.weather.calendar.events_logic.EventsListActivity;
 
 
 public class AlarmAlertDialog extends AppCompatActivity {
