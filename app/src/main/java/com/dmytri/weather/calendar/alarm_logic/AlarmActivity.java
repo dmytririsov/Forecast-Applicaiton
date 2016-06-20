@@ -79,14 +79,17 @@ public class AlarmActivity extends AppCompatActivity {
         alarmTextView.setText(alarmText);
     }
 
-    public class AlarmReceiver extends WakefulBroadcastReceiver {
+    public static class AlarmReceiver extends WakefulBroadcastReceiver {
+
+        public AlarmReceiver() {
+        }
 
         private final String TAG = AlarmReceiver.class.getSimpleName();
 
         @Override
         public void onReceive(final Context context, Intent intent) {
-            Log.d(TAG, "onRecieve");
-            setAlarmText("Alarm! Wake up! Wake up!");
+            Log.d(TAG, "onReceive");
+            //setAlarmText("Alarm! Wake up! Wake up!");
             ComponentName comp = new ComponentName(context.getPackageName(), AlarmService.class.getName());
             startWakefulService(context, (intent.setComponent(comp)));
             Intent intent1 = new Intent(context, AlarmAlertDialog.class);

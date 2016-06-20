@@ -81,12 +81,11 @@ public class EventsListActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
-
         try{
             List<EventsModel> eventDateFromDB = new Select(new String[]{"Id, Event_description, Event_spinner, Event_date"})
                         .from(EventsModel.class)
                         .where("Event_date = ?", eventDate)
-                        .executeSingle();
+                        .execute();
             List<String> eventDescriptionsFrom = new ArrayList<>();
             for (EventsModel model : eventDateFromDB) {
                 eventDescriptionsFrom.add(

@@ -1,4 +1,4 @@
-package com.dmytri.weather.Calendar;
+package com.dmytri.weather.calendar;
 
 
 import android.content.Context;
@@ -53,6 +53,8 @@ public class CalendarDaysAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.day_item, parent, false);
+        }else {
+
         }
         TextView dayNumber = (TextView) convertView.findViewById(R.id.day_number_text_view);
         dayNumber.setText(String.valueOf(mCalendar.get(Calendar.DAY_OF_MONTH)));
