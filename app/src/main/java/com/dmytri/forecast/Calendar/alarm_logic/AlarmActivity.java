@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
+import com.dmytri.forecast.Calendar.CalendarFragment;
 import com.dmytri.weather.R;
 
 import java.util.Calendar;
@@ -81,6 +82,7 @@ public class AlarmActivity extends AppCompatActivity {
 
     public static class AlarmReceiver extends WakefulBroadcastReceiver {
 
+
         public AlarmReceiver() {
         }
 
@@ -89,7 +91,6 @@ public class AlarmActivity extends AppCompatActivity {
         @Override
         public void onReceive(final Context context, Intent intent) {
             Log.d(TAG, "onReceive");
-            //setAlarmText("Alarm! Wake up! Wake up!");
             ComponentName comp = new ComponentName(context.getPackageName(), AlarmService.class.getName());
             startWakefulService(context, (intent.setComponent(comp)));
             Intent intent1 = new Intent(context, AlarmAlertDialog.class);

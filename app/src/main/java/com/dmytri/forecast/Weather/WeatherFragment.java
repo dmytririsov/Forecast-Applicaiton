@@ -60,7 +60,6 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "City - " + CityPreference.getInstance(getActivity()).getCity());
         mWeatherFont = Typeface.createFromAsset(getActivity().getAssets(), WEATHER_ICONS);
     }
 
@@ -81,7 +80,7 @@ public class WeatherFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "on click update");
-                getJson(CityPreference.getInstance(getActivity()).getCity());
+                getJson(Preference.getInstance(getActivity()).getCity());
                 Toast.makeText(getActivity(), R.string.toast_data_updated, Toast.LENGTH_SHORT).show();
 
             }
@@ -94,7 +93,7 @@ public class WeatherFragment extends Fragment {
                 showInputDialog();
             }
         });
-        getJson(CityPreference.getInstance(getActivity()).getCity());
+        getJson(Preference.getInstance(getActivity()).getCity());
         return rootView;
     }
 
@@ -124,7 +123,7 @@ public class WeatherFragment extends Fragment {
     public void updateWeatherData(final String city) {
         getJson(city);
         if (city != null && !city.isEmpty()) {
-            CityPreference.getInstance(getActivity()).setCity(city);
+            Preference.getInstance(getActivity()).setCity(city);
         }
     }
 
@@ -231,7 +230,7 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //updateWeatherData(CityPreference.getInstance(getActivity()).getCity());
+        //updateWeatherData(Preference.getInstance(getActivity()).getCity());
         Log.d(TAG, "OnResume");
     }
 

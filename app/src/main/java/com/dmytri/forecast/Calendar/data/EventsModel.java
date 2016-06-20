@@ -35,7 +35,9 @@ public class EventsModel extends Model {
                 .from(EventsModel.class)
                 .where("Event_date = ?", eventDate)
                 .execute();
-    }public static List<EventsModel> getDateDescription(final String eventDate) {
+    }
+
+    public static List<EventsModel> getDateDescription(final String eventDate) {
         return new Select(new String[]{"Id, Event_description, Event_spinner, Event_date"})
                 .from(EventsModel.class)
                 .where("Event_date = ?", eventDate)

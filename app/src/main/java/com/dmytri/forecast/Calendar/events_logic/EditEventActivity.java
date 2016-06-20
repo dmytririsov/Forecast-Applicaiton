@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.dmytri.forecast.Calendar.CalendarFragment;
 import com.dmytri.forecast.Calendar.alarm_logic.AlarmActivity;
 import com.dmytri.forecast.Calendar.data.EventsModel;
+import com.dmytri.forecast.Weather.Preference;
 import com.dmytri.weather.R;
 
 public class EditEventActivity extends AppCompatActivity {
@@ -32,10 +33,12 @@ public class EditEventActivity extends AppCompatActivity {
     private String event_date;
     private final String[] mEventType = {"Meeting", "Birthday", "Reminder"};
     private final static String TAG = EditEventActivity.class.getSimpleName();
+    private String month;
+    private int position;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -46,16 +49,27 @@ public class EditEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
         setContentView(R.layout.event_details);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mEventButtonAlarm = (Button)findViewById(R.id.button_set_alarm);
-        mEventButtonSubmit = (Button)findViewById(R.id.event_button_submit);
-        mEventDate = (TextView)findViewById(R.id.event_details_date);
-        final String month = intent.getStringExtra(CalendarFragment.MONTH_INTENT);
-        final int position = intent.getIntExtra(CalendarFragment.POSITION_INTENT, 1);
-        mEventDate.setText(month + ", " +  position);
+        Intent intent = getIntent();
+        if (intent.getStringExtra(CalendarFragment.MONTH_INTENT) != null
+                && !intent.getStringExtra(CalendarFragment.MONTH_INTENT).isEmpty()
+                && intent.getIntExtra(CalendarFragment.POSITION_INTENT, 1) != 1 ) {
+            month = intent.getStringExtra(CalendarFragment.MONTH_INTENT);
+            position = intent.getIntExtra(CalendarFragment.POSITION_INTENT, 1);
+            Preference.getInstance(this).setCurrentMonth(month);
+            Preference.getInstance(this).setCurrentPosition(position);
+        }
+        else {
+            month = Preference.getInstance(this).getCurrentMonth();
+            position = Preference.getInstance(this).getCurrentPosition();
+        }
+
+        mEventButtonAlarm = (Button) findViewById(R.id.button_set_alarm);
+        mEventButtonSubmit = (Button) findViewById(R.id.event_button_submit);
+        mEventDate = (TextView) findViewById(R.id.event_details_date);
+        mEventDate.setText(month + ", " + position);
         mEventEditText = (EditText) findViewById(R.id.event_details_edit_text);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, mEventType);
@@ -81,7 +95,7 @@ public class EditEventActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick mEventButtonSubmit");
                 event_description = mEventEditText.getText().toString().isEmpty() ? "Description empty" : mEventEditText.getText().toString();
                 event_spinner = spinner.getSelectedItem().toString();
-                event_date = month + ", " +  Integer.toString(position);
+                event_date = month + ", " + Integer.toString(position);
                 EventsModel eventsModel = new EventsModel(event_description, event_spinner, event_date);
                 eventsModel.save();
                 Toast.makeText(getBaseContext().getApplicationContext(), "Event was added", Toast.LENGTH_SHORT).show();
@@ -96,11 +110,17 @@ public class EditEventActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "onClick mEventButtonAlarm");
                 Intent intentAlarm = new Intent(v.getContext(), AlarmActivity.class);
-                intentAlarm.putExtra("event_data", event_date);
+                intentAlarm.putExtra(CalendarFragment.POSITION_INTENT, position);
+                intentAlarm.putExtra(CalendarFragment.MONTH_INTENT, month);
                 v.getContext().startActivity(intentAlarm);
             }
         });
     }
-}
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+}
 

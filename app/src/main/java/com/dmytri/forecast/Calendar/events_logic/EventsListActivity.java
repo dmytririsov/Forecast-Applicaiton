@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.activeandroid.query.Delete;
 import com.dmytri.forecast.Calendar.CalendarFragment;
+import com.dmytri.forecast.Weather.Preference;
 import com.dmytri.weather.R;
 import com.dmytri.forecast.Calendar.data.EventsModel;
 
@@ -32,6 +33,8 @@ public class EventsListActivity extends AppCompatActivity {
     private List <String> mEventsDescriptions;
     private List <String> mIdFromDB;
     private String eventDate;
+    private String month;
+    private int position;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -48,10 +51,20 @@ public class EventsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "OnCreate");
         setContentView(R.layout.events_list_acitivity);
-        Intent intent = getIntent();
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        Intent intent = getIntent();
+        if (intent.getStringExtra(CalendarFragment.MONTH_INTENT) != null
+                && !intent.getStringExtra(CalendarFragment.MONTH_INTENT).isEmpty()) {
+            month = intent.getStringExtra(CalendarFragment.MONTH_INTENT);
+            position = intent.getIntExtra(CalendarFragment.POSITION_INTENT, 1);
+            Preference.getInstance(this).setCurrentMonth(month);
+            Preference.getInstance(this).setCurrentPosition(position);
+        }
+        else {
+            month = Preference.getInstance(this).getCurrentMonth();
+            position = Preference.getInstance(this).getCurrentPosition();
+        }
         ListView view = (ListView) findViewById(R.id.event_list);
         assert view != null;
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -65,8 +78,6 @@ public class EventsListActivity extends AppCompatActivity {
                 Toast.makeText(view.getContext(), "Event was removed", Toast.LENGTH_SHORT).show();
             }
         });
-        final int position = intent.getIntExtra(CalendarFragment.POSITION_INTENT, DEFAULT_VALUE);
-        final String month = intent.getStringExtra(CalendarFragment.MONTH_INTENT);
         eventDate =  month + ", " +  Integer.toString(position);
 
         mAddEventButton = (Button) findViewById(R.id.button_add_event);
@@ -109,4 +120,5 @@ public class EventsListActivity extends AppCompatActivity {
                 view.setAdapter(arrayAdapter);
             }
     }
+
 }

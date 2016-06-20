@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.dmytri.forecast.Calendar.CalendarFragment;
 import com.dmytri.forecast.Calendar.events_logic.EventsListActivity;
 
 
@@ -23,6 +24,8 @@ public class AlarmAlertDialog extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         displayAlert();
     }
 
@@ -70,6 +73,7 @@ public class AlarmAlertDialog extends AppCompatActivity {
                         Intent intent = new Intent(AlarmAlertDialog.this, EventsListActivity.class);
                         startActivity(intent);
                         mAlarmService.stop();
+                        finish();
                         dialog.cancel();
                     }
                 });
