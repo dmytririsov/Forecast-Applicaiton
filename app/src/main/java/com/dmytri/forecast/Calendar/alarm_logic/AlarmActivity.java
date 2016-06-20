@@ -1,4 +1,4 @@
-package com.dmytri.weather.calendar.alarm_logic;
+package com.dmytri.forecast.Calendar.alarm_logic;
 
 
 import android.app.Activity;

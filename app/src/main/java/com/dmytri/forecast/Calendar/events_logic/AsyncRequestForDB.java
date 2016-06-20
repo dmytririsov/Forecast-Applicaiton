@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import com.activeandroid.query.Select;
 import com.dmytri.weather.R;
-import com.dmytri.weather.calendar.data.EventsModel;
+import EventsModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
-package com.dmytri.weather.weather;
+package com.dmytri.forecast.Weather;
 
 
-import com.dmytri.weather.weather.models.Model;
+import com.dmytri.forecast.Weather.Models.Model;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

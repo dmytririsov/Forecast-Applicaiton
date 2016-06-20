@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         android:name="com.activeandroid.app.Application">
 
-        <activity android:name=".MainActivity"
+        <activity android:name="com.dmytri.forecast.MainActivity"
             android:label="Calendar and Weather">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,24 +21,24 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".calendar.events_logic.EditEventActivity"
+        <activity android:name="com.dmytri.forecast.Calendar.events_logic.EditEventActivity"
             android:label="Edit event">
         </activity>
 
-        <activity android:name=".calendar.events_logic.EventsListActivity"
+        <activity android:name="com.dmytri.forecast.Calendar.events_logic.EventsListActivity"
             android:label="Events list">
         </activity>
 
-        <activity android:name=".calendar.alarm_logic.AlarmActivity"
+        <activity android:name="com.dmytri.forecast.Calendar.alarm_logic.AlarmActivity"
             android:label="Alarm"/>
 
-        <activity android:name=".calendar.alarm_logic.AlarmAlertDialog"
+        <activity android:name="com.dmytri.forecast.Calendar.alarm_logic.AlarmAlertDialog"
             android:label="Alarm"/>
 
-        <service android:name=".calendar.alarm_logic.AlarmService"
+        <service android:name="com.dmytri.forecast.Calendar.alarm_logic.AlarmService"
             android:enabled="true">
         </service>
-        <receiver android:name=".calendar.alarm_logic.AlarmActivity$AlarmReceiver"/>
+        <receiver android:name="com.dmytri.forecast.Calendar.alarm_logic.AlarmActivity$AlarmReceiver"/>
 
         <meta-data android:name="AA_DB_NAME" android:value="1.0.0.0.1"/>
         <meta-data android:name="AA_DB_VERSION" android:value="20"/>

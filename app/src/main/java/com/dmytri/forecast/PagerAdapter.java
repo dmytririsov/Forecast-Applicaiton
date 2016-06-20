@@ -1,11 +1,11 @@
-package com.dmytri.weather;
+package com.dmytri.forecast;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.dmytri.weather.calendar.CalendarFragment;
-import com.dmytri.weather.weather.WeatherFragment;
+import com.dmytri.forecast.Calendar.CalendarFragment;
+import com.dmytri.forecast.Weather.WeatherFragment;
 
 
 public class PagerAdapter extends FragmentStatePagerAdapter {

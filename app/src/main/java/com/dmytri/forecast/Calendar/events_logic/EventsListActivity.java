@@ -1,4 +1,4 @@
-package com.dmytri.weather.calendar.events_logic;
+package com.dmytri.forecast.Calendar.events_logic;
 
 
 import android.content.Intent;
@@ -14,10 +14,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
+import com.dmytri.forecast.Calendar.CalendarFragment;
 import com.dmytri.weather.R;
-import com.dmytri.weather.calendar.CalendarFragment;
-import com.dmytri.weather.calendar.data.EventsModel;
+import com.dmytri.forecast.Calendar.data.EventsModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,33 +80,26 @@ public class EventsListActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
-        try{
-            List<EventsModel> eventDateFromDB = new Select(new String[]{"Id, Event_description, Event_spinner, Event_date"})
-                        .from(EventsModel.class)
-                        .where("Event_date = ?", eventDate)
-                        .execute();
-            List<String> eventDescriptionsFrom = new ArrayList<>();
-            for (EventsModel model : eventDateFromDB) {
-                eventDescriptionsFrom.add(
-                                "Event date: " + model.event_date + "\n" +
-                                "Event description: " + model.event_description + "\n" +
-                                "Event spinner: " + model.event_spinner);
-                mEventsDescriptions = eventDescriptionsFrom;
-                }
-            List<EventsModel> idFromDB = new Select(new String[]{"Id"})
-                    .from(EventsModel.class)
-                    .where("Event_date = ?", eventDate)
-                    .execute();
-            List<String> eventIdFrom = new ArrayList<>();
-            for (EventsModel model : idFromDB) {
-                eventIdFrom.add("ID: " + model.getId().toString());
-                mIdFromDB = eventIdFrom;
+            List<EventsModel> eventDateFromDB = EventsModel.getDateDescription(eventDate);
+            if (eventDateFromDB.size() != 0) {
+                List<String> eventDescriptionsFrom = new ArrayList<>();
+                for (EventsModel model : eventDateFromDB) {
+                    eventDescriptionsFrom.add(
+                                    "Event date: " + model.event_date + "\n" +
+                                    "Event description: " + model.event_description + "\n" +
+                                    "Event spinner: " + model.event_spinner);
+                    mEventsDescriptions = eventDescriptionsFrom;
                 }
             }
-        catch (Exception e) {
-            e.getMessage();
-        }
-        finally {
+
+            List<EventsModel> idFromDB = EventsModel.getID(eventDate);
+            if (idFromDB.size() != 0) {
+                List<String> eventIdFrom = new ArrayList<>();
+                for (EventsModel model : idFromDB) {
+                    eventIdFrom.add("ID: " + model.getId().toString());
+                    mIdFromDB = eventIdFrom;
+                }
+            }
             if (mEventsDescriptions == null) {
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.events_list_item);
                 view.setAdapter(arrayAdapter);
@@ -116,6 +108,5 @@ public class EventsListActivity extends AppCompatActivity {
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.events_list_item, mEventsDescriptions);
                 view.setAdapter(arrayAdapter);
             }
-        }
     }
 }

@@ -1,4 +1,4 @@
-package com.dmytri.weather.calendar;
+package com.dmytri.forecast.Calendar;
 
 
 import android.content.Context;

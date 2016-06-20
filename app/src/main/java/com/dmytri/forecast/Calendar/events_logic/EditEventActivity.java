@@ -1,4 +1,4 @@
-package com.dmytri.weather.calendar.events_logic;
+package com.dmytri.forecast.Calendar.events_logic;
 
 
 import android.content.Intent;
@@ -15,9 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dmytri.weather.calendar.CalendarFragment;
-import com.dmytri.weather.calendar.alarm_logic.AlarmActivity;
-import com.dmytri.weather.calendar.data.EventsModel;
+import com.dmytri.forecast.Calendar.CalendarFragment;
+import com.dmytri.forecast.Calendar.alarm_logic.AlarmActivity;
+import com.dmytri.forecast.Calendar.data.EventsModel;
 import com.dmytri.weather.R;
 
 public class EditEventActivity extends AppCompatActivity {

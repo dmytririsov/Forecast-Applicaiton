@@ -1,4 +1,4 @@
-package com.dmytri.weather.weather;
+package com.dmytri.forecast.Weather;
 
 
 import android.app.Activity;
@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dmytri.weather.R;
-import com.dmytri.weather.weather.models.Model;
+import com.dmytri.forecast.Weather.Models.Model;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;

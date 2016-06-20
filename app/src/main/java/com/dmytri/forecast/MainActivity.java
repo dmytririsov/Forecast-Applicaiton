@@ -1,4 +1,4 @@
-package com.dmytri.weather;
+package com.dmytri.forecast;
 
 
 import android.os.Bundle;
@@ -10,8 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.activeandroid.ActiveAndroid;
-import com.dmytri.weather.calendar.CalendarFragment;
-import com.dmytri.weather.weather.WeatherFragment;
+import com.dmytri.forecast.Calendar.CalendarFragment;
+import com.dmytri.forecast.Weather.WeatherFragment;
+import com.dmytri.weather.R;
 
 public class MainActivity extends AppCompatActivity {
 
