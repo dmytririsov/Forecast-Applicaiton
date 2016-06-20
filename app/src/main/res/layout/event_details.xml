@@ -4,25 +4,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/event_details_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="34dp"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="34dp"
-        android:textSize="20dp" />
-
     <Button
         android:id="@+id/button_set_alarm"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/event_details_button_alarm"
+        android:layout_gravity="right"
+        android:layout_below="@+id/event_details_date"
         android:layout_alignLeft="@+id/event_button_submit"
-        android:layout_alignStart="@+id/event_button_submit"
-        android:layout_alignTop="@+id/event_details_date"
-        android:text="@string/event_details_button_alarm" />
+        android:layout_alignStart="@+id/event_button_submit" />
+
+    <TextView
+        android:id="@+id/event_details_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="34dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="34dp"
+        android:textSize="20sp"
+        android:text="date" />
 
     <Button
         android:id="@+id/event_button_submit"
@@ -31,21 +32,8 @@
         android:layout_alignBottom="@+id/textView"
         android:layout_alignEnd="@+id/event_details_edit_text"
         android:layout_alignRight="@+id/event_details_edit_text"
-        android:text="@string/event_details_button_submit" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/event_details"
-        android:textSize="11dp"
-        android:layout_below="@+id/event_details_spinner"
-        android:layout_alignLeft="@+id/event_details_date"
-        android:layout_alignStart="@+id/event_details_date"
-        android:layout_toStartOf="@+id/event_button_submit"
-        android:layout_alignRight="@+id/event_details_spinner"
-        android:layout_alignEnd="@+id/event_details_spinner" />
+        android:text="@string/event_details_button_submit"
+        android:layout_gravity="right" />
 
     <Spinner
         android:id="@+id/event_details_spinner"
@@ -57,9 +45,23 @@
         android:spinnerMode="dialog"
         android:layout_marginLeft="10dp" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/event_details"
+        android:textSize="11sp"
+        android:layout_below="@+id/event_details_spinner"
+        android:layout_alignLeft="@+id/event_details_date"
+        android:layout_alignStart="@+id/event_details_date"
+        android:layout_toStartOf="@+id/event_button_submit"
+        android:layout_alignRight="@+id/event_details_spinner"
+        android:layout_alignEnd="@+id/event_details_spinner" />
+
     <EditText
         android:id="@+id/event_details_edit_text"
-        android:layout_width="wrap_content"
+        android:layout_width="281dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -71,15 +73,5 @@
         android:background="@drawable/border"
         android:ems="10"
         android:inputType="textMultiLine" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="147dp"
-        android:layout_toLeftOf="@+id/textView"
-        android:layout_toStartOf="@+id/textView"
-        android:textSize="11dp" />
 
 </RelativeLayout>
