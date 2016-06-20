@@ -13,13 +13,11 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.dmytri.weather.R;
-
 
 public class AlarmService extends IntentService {
 
     private static final String TAG = AlarmService.class.getSimpleName();
-    private static final String TAP_TO_STOP = "Tap to stop!";
+    private static final String TAP_TO_STOP = "Reminder!";
     private NotificationManager alarmNotificationManager;
     private Ringtone ringtone;
     private final IBinder mBinder = new LocalBinder();
@@ -70,7 +68,6 @@ public class AlarmService extends IntentService {
                 new NotificationCompat.Builder(this)
                         .setContentTitle("Alarm")
                         .setAutoCancel(true)
-                        .setSmallIcon(R.drawable.skip_next)
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                         .setContentText(msg);
 

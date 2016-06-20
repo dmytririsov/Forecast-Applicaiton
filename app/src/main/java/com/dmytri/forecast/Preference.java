@@ -1,4 +1,4 @@
-package com.dmytri.forecast.Weather;
+package com.dmytri.forecast;
 /*
     This class is responsible for set default city if user not chosen city.
     Now as default city - Kiev
@@ -33,7 +33,7 @@ public class Preference {
 
     public String getCity() {
         if (mCity == null) {
-            mCity = mPreferences.getString(CITY_KEY, "Kiev,UA"); //if not chosen city, as default Kiev
+            mCity = mPreferences.getString(CITY_KEY, "Kiev,UA");
         }
         return mCity;
     }
@@ -43,7 +43,7 @@ public class Preference {
         mPreferences.edit().putString(CITY_KEY, city).apply();
     }
     public int getCurrentPosition() {
-        mPosition = mPreferences.getInt(CalendarFragment.POSITION_INTENT, 0); //if not chosen city, as default Kiev
+        mPosition = mPreferences.getInt(CalendarFragment.POSITION_INTENT, 0);
         return mPosition;
     }
 
@@ -53,7 +53,7 @@ public class Preference {
     }
 
     public String getCurrentMonth() {
-        mMonth = mPreferences.getString(CalendarFragment.MONTH_INTENT, "null"); //if not chosen city, as default Kiev
+        mMonth = mPreferences.getString(CalendarFragment.MONTH_INTENT, "null");
         return mMonth;
     }
 

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dmytri.forecast.Preference;
 import com.dmytri.weather.R;
 import com.dmytri.forecast.Weather.Models.Model;
 import com.google.gson.Gson;

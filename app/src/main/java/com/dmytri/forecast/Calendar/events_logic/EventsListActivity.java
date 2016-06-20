@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.activeandroid.query.Delete;
 import com.dmytri.forecast.Calendar.CalendarFragment;
-import com.dmytri.forecast.Weather.Preference;
+import com.dmytri.forecast.Preference;
 import com.dmytri.weather.R;
 import com.dmytri.forecast.Calendar.data.EventsModel;
 
