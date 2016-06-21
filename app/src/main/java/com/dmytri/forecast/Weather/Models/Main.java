@@ -5,11 +5,13 @@ import com.google.gson.annotations.SerializedName;
 
 
 public class Main {
-
+    @SerializedName("temp")
     @Expose
     private Double temp;
+    @SerializedName("pressure")
     @Expose
     private Integer pressure;
+    @SerializedName("humidity")
     @Expose
     private Integer humidity;
     @SerializedName("temp_min")

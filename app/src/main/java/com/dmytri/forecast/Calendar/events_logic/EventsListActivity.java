@@ -27,7 +27,6 @@ public class EventsListActivity extends AppCompatActivity {
 
     public static final String DAY_OF_YEAR_KEY = "dayOfYear";
     private static final String TAG = EventsListActivity.class.getSimpleName();
-    private static final int DEFAULT_VALUE = 1;
 
     private Button mAddEventButton;
     private List <String> mEventsDescriptions;

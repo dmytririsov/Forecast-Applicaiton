@@ -3,148 +3,158 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation"
+
+    <TextView xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/name_of_month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
-        android:textSize="30dp"
-        android:layout_centerHorizontal="true" />
-    <TextView
-        xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:textSize="30sp"
+        tools:ignore="MissingTranslation" />
+
+    <TextView xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/name_of_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
         android:textSize="30dp"
-        android:layout_centerHorizontal="true" />
+        tools:ignore="MissingTranslation" />
 
     <ImageButton
-        android:layout_marginLeft="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/chevron_left"
         android:id="@+id/imageButtonPrev"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="false" />
-
-    <ImageButton
-        android:layout_marginRight="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/chevron_right"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/chevron_left" />
+
+    <ImageButton
         android:id="@+id/imageButtonNext"
-        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/calendar_days"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/calendar_days"
-        android:layout_alignEnd="@+id/calendar_days" />
+        android:layout_gravity="end"
+        android:layout_marginRight="30dp"
+        android:src="@drawable/chevron_right" />
 
     <GridView
         android:id="@+id/calendar_days"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_width="wrap_content"
         android:layout_height="468dp"
-        android:columnWidth="65dp"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="15dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_below="@+id/imageButtonPrev"
-        android:numColumns="7"/>
+        android:layout_marginTop="40dp"
+        android:columnWidth="65dp"
+        android:gravity="center"
+        android:numColumns="7"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="15dp" />
 
     <LinearLayout
 
+        android:id="@+id/gridLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_above="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="70dp"
-        android:id="@+id/gridLayout"
-        android:weightSum="7"
-        android:layout_above="@+id/textView2"
-        android:layout_below="@+id/imageButtonPrev">
+        android:layout_below="@+id/imageButtonPrev"
+        android:weightSum="7">
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_weight="1" />
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="S"
+            android:textColor="@color/text_color" />
 
         <TextView
-            android:layout_marginTop="5dp"
-            android:textColor="@color/text_color"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="S"
             android:layout_columnWeight="1"
-            android:layout_weight="1"/>
-        <TextView
-            android:layout_marginTop="5dp"
-            android:textColor="@color/text_color"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="M"
-            android:layout_columnWeight="1"
-            android:layout_weight="1"/>
+            android:textColor="@color/text_color" />
+
         <TextView
-            android:layout_marginTop="5dp"
-            android:textColor="@color/text_color"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="T"
-            android:layout_columnWeight="1"
-            android:layout_weight="1"/>
+            android:textColor="@color/text_color" />
+
         <TextView
-            android:layout_marginTop="5dp"
-            android:textColor="@color/text_color"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="W"
-            android:layout_columnWeight="1"
-            android:layout_weight="1"/>
+            android:textColor="@color/text_color" />
+
         <TextView
-            android:layout_marginTop="5dp"
-            android:textColor="@color/text_color"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="T"
-            android:layout_columnWeight="1"
-            android:layout_weight="1"/>
+            android:textColor="@color/text_color" />
+
         <TextView
-            android:layout_marginTop="5dp"
-            android:textColor="@color/text_color"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="F"
-            android:layout_columnWeight="1"
-            android:layout_weight="1"/>
+            android:textColor="@color/text_color" />
+
         <TextView
-            android:layout_marginTop="5dp"
-            android:textColor="@color/text_color"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="S"
             android:layout_columnWeight="1"
-            android:layout_weight="1"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="S"
+            android:textColor="@color/text_color" />
     </LinearLayout>
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/textView2"
         android:layout_alignTop="@+id/calendar_days"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_centerHorizontal="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

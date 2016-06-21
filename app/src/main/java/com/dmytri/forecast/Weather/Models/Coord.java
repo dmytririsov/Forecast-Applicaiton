@@ -1,13 +1,16 @@
 package com.dmytri.forecast.Weather.Models;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Dmytri on 07.06.2016.
  */
 public class Coord {
+    @SerializedName("lon")
     @Expose
     private Double lon;
+    @SerializedName("lat")
     @Expose
     private Double lat;
 

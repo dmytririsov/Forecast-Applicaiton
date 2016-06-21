@@ -22,13 +22,18 @@ import com.dmytri.forecast.Preference;
 import com.dmytri.weather.R;
 import com.dmytri.forecast.Weather.Models.Model;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -133,18 +138,61 @@ public class WeatherFragment extends Fragment {
         GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone(TIME_ZONE));
         calendar.setTimeInMillis(current_time);
         mUpdateField.setText("Last update: " + sdf.format(calendar.getTime()));
-        Gson gson = new Gson();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
                 .baseUrl(OPEN_WEATHER_MAP_API)
                 .build();
-        RestAPI service = retrofit.create(RestAPI.class);
-        Call<Model> call = service.getWeatherReport(city, APPID, UNITS);
-        Log.d(TAG, "Need query - " + OPEN_WEATHER_MAP_API +"data/2.5/weather?q=" + city + "&appid=9c4a47ff53dff3ea499b0bd0f239df78&UNITS=metric");
+
+        RestAPI restAPI = retrofit.create(RestAPI.class);
+        Call<Model> call = restAPI.getWeatherReport(city, APPID, UNITS);
         call.enqueue(new Callback<Model>() {
             @Override
             public void onResponse(Call<Model> call, Response<Model> response) {
+                String city = response.body().getName();
+                String country = response.body().getSys().getCountry();
+                String status = response.body().getWeather().get(0).getDescription();
+                String humidity = response.body().getMain().getHumidity().toString();
+                String pressure = response.body().getMain().getPressure().toString();
+                String wind = response.body().getWind().getSpeed().toString();
+                Double temp = response.body().getMain().getTemp();
+                Long sunrise = (long)response.body().getSys().getSunrise();
+                Long sunset = (long)response.body().getSys().getSunset();
+                String details =  response.body().getWeather().get(0).getId().toString();
+                Integer updatedDetails = Integer.parseInt(details);
+
+
+                mCityField.setText(city.toUpperCase() + ", " + country);
+                mCurrentTemperatureField.setText(String.format("%.1f", temp) + "℃"); //setting up details
+                setWeatherIcon(updatedDetails,
+                        sunrise * TIME_FROM_MILLISECONDS,
+                        sunset * TIME_FROM_MILLISECONDS);
+                mDetailsField.setText(
+                        "\n" + "Status: " + status +
+                                "\n" + "Humidity: " + humidity + "%" +
+                                "\n" + "Pressure: " + pressure + "hPa" +
+                                "\n" + "Wind: " + wind + "m/s");
+                Log.d(TAG, "onSuccesful responce");
+            }
+
+            @Override
+            public void onFailure(Call<Model> call, Throwable t) {
+                Log.d(TAG, "onFailure to get response");
+            }
+        });
+        /*RestAPI service = retrofit.create(RestAPI.class);*/
+        /*Call<Model> call = service.getWeatherReport(city, APPID, UNITS);
+        Log.d(TAG, "Need query - " + OPEN_WEATHER_MAP_API +"data/2.5/weather?q=" + city + "&appid=9c4a47ff53dff3ea499b0bd0f239df78&UNITS=metric");
+        *//*call.enqueue(new Callback<Model>() {
+            @Override
+            public void onResponse(Call<Model> call, Response<Model> response) {
                 try {
+                    Log.d(TAG, "Call: " + call.toString() + "\n"
+                                + "Response: " + response.toString());
                     String city = response.body().getName();
                     String country = response.body().getSys().getCountry();
                     String status = response.body().getWeather().get(0).getDescription();
@@ -172,13 +220,13 @@ public class WeatherFragment extends Fragment {
                 catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-
+            }*/
+/*
             @Override
             public void onFailure(Call<Model> call, Throwable t) {
 
             }
-        });
+        });*/
     }
 
     private void setWeatherIcon(int actualId, long sunrise, long sunset) {
